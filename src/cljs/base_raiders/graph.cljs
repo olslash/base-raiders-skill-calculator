@@ -1,7 +1,10 @@
 (ns base-raiders.graph)
-(def skills {:resist-damage  {:stress-cap 1}
+
+(def skills {:resist-damage  {:stress-cap 1
+                              :resist-damage 1}
              :stress-cap     {:physical-force 2}
-             :physical-force {:climb 1 :leap 1}
+             :physical-force {:climb 1 :leap 1
+                              :stress-cap 2}
              :climb          {:move 1 :physical-force 1}
              :leap           {:move 1 :physical-force 1}
              :move           {:dodge 0 :stealth 2
@@ -25,11 +28,13 @@
                   :stealth        1
                   :dexterity      1
                   :strike         1
+                  :parry          1
                   :init-physical  2
                   :init-mental    2
                   :init-social    2})
 
 (def max-path-cost 4)
+
 
 
 (defn neighbors [graph node]
@@ -81,59 +86,28 @@
   "compare two paths by movement cost"
   (let [cost1 (cost-of-path-movement graph path1)
         cost2 (cost-of-path-movement graph path2)]
-    (compare cost1 cost2)))
+    (cond
+      ;nils float right
+      (nil? path1) 1
+      (nil? path2) -1
+      :else (compare cost1 cost2))))
 
 (defn cheapest-path [graph from to]
   "the cheapest path between from and to -> [:a :b :c]"
   (let [paths (paths-between graph from to)]
-    ; if 1 path, just return it
-    (if (= (count paths) 1)
-      (first paths)
-      (first (sort (partial compare-paths graph) paths)))
-    ; compare the paths by score, not actual length
+    (first (sort (partial compare-paths graph) paths))))
 
-    #_(first (sort paths))))
-
-#_(defn path-to-cheapest-node [graph selected node]
+(defn path-to-cheapest-node [graph selected node]
   "finds the path to the closest node in [selected] to the provided node -> [:a :b :c]"
-  (let [paths (map #(shortest-path graph node %1) selected)]
-    (first (sort paths))))
+  (let [paths         (map #(cheapest-path graph node %1) selected)
+        cheapest-path (first (sort (partial compare-paths graph) paths))]
+    (or cheapest-path
+        [node])))        ; node itself if no other paths
 
 
-#_(defn game-cost-of-selection [graph costs selected node]
+(defn game-cost-of-selection [graph costs selected node]
   "cost of selecting -node- given [selected] other nodes -> number"
-  (let [max-path-cost 4
-        path-to-closest (path-to-closest-node graph selected node)
-        skill-cost ((last path-to-closest) costs)
-        path-cost  (min (cost-of-path-movement graph path-to-closest) max-path-cost)]
-    (print path-to-closest)
+  (let [path-to-cheapest (path-to-cheapest-node graph selected node)
+        skill-cost ((last path-to-cheapest) costs)
+        path-cost (cost-of-path-movement graph path-to-cheapest)]
     (+ skill-cost path-cost)))
-
-
-
-
-; given a bunch of selected nodes, what is the lowest possible cost to add a selected node?
-
-
-
-
-
-
-
-
-
-
-
-#_(defn cost-of-skills-on-path [skills path]
-    (reduce (fn [cost skill]
-              (let [skill-cost (skill skills)]
-                (+ cost skill-cost)))
-            0
-            path))
-
-#_(defn game-cost-of-path [graph skills path]
-    ; game rules
-    (let [max-path-cost 4
-          path-cost (min (cost-of-path-movement graph path) max-path-cost)
-          skills-cost (cost-of-skills-on-path skills path)]
-      (+ path-cost skills-cost)))

@@ -4,8 +4,10 @@
    [base-raiders.graph :as g]))
 
 (def skills {:resist-damage  {:stress-cap 1}
-             :stress-cap     {:physical-force 2}
-             :physical-force {:climb 1 :leap 1}
+             :stress-cap     {:physical-force 2
+                              :resist-damage 1}
+             :physical-force {:climb 1 :leap 1
+                              :stress-cap 2}
              :climb          {:move 1 :physical-force 1}
              :leap           {:move 1 :physical-force 1}
              :move           {:dodge 0 :stealth 2
@@ -55,6 +57,18 @@
            2)
         "gives the correct cost"))
 
+  (testing "paths-between"
+    (is (let [paths (g/paths-between skills :resist-damage :move)]
+          (= (set paths)
+             #{[:resist-damage :stress-cap :physical-force :climb :move]
+               [:resist-damage :stress-cap :physical-force :leap :move]}))
+        "correct result from a leaf")
+    (is (let [paths (g/paths-between skills :move :stress-cap)]
+          (= (set paths)
+             #{[:move :climb :physical-force :stress-cap]
+               [:move :leap :physical-force :stress-cap]}))
+        "correct result from the middle of the graph"))
+
   (testing "cost-of-path-movement"
     (is (= (g/cost-of-path-movement skills [:resist-damage :stress-cap])
            1)
@@ -87,28 +101,37 @@
               (= path [:resist-damage :stress-cap :physical-force :leap :move])))
         "correct path with two equal possibilities"))
 
-  #_(testing "closest node"
-    (is (= (g/path-to-closest-node skills [:physical-force :climb] :dodge)
+  (testing "path-to-cheapest-node"
+    (is (= (g/path-to-cheapest-node skills [:init-physical] :move)
+           [:move])
+        "the node itself is cheapest when no other paths exist")
+    (is (= (g/path-to-cheapest-node skills [:init-physical :strike] :move)
+           [:move :stealth :dexterity :strike])
+        "correct result when one path is nil")
+    (is (= (g/path-to-cheapest-node skills [:physical-force :climb] :dodge)
            [:dodge :move :climb])
-        "finds the closest node - 1")
-    (is (= (g/path-to-closest-node skills [:security :parry] :resist-damage)
+        "finds the path to the cheapest node - 1")
+    (is (= (g/path-to-cheapest-node skills [:security :parry] :resist-damage)
            [:resist-damage :stress-cap :physical-force :climb :move :stealth :dexterity :security])
-        "finds the closest node - 2"))
+        "finds the path to the cheapest node - 2")
+    (is (= (g/path-to-cheapest-node skills [:stress-cap :dexterity] :move)
+           [:move :stealth :dexterity])
+        "finds the path to the cheapest node - 3"))
 
 
-  #_(testing "game-cost-of-selection"
+  (testing "game-cost-of-selection"
     (is (= (g/game-cost-of-selection skills skill-costs [:stress-cap] :resist-damage)
            3)
         "one edge/one possibility")
     (is (= (g/game-cost-of-selection skills skill-costs [:stress-cap :dexterity] :move)
            4)
         "multiple edges")
-    #_(is (= (g/game-cost-of-selection skills skill-costs [:resist-damage] :parry)
+    (is (= (g/game-cost-of-selection skills skill-costs [:resist-damage] :parry)
            6)
         "considers max path cost")
-    #_(is (= (g/game-cost-of-selection skills skill-costs (g/shortest-path skills [] :dodge))
+    (is (= (g/game-cost-of-selection skills skill-costs [] :dodge)
            2)
         "with nothing else selected, consider only the cost of the node")
-    #_(is (= (g/game-cost-of-selection skills skill-costs (g/shortest-path skills [:init-physical] :stress-cap))
-           2)
+    (is (= (g/game-cost-of-selection skills skill-costs [:init-physical] :leap)
+           1)
         "with only non-connected nodes selected, only the cost of the node applies")))
