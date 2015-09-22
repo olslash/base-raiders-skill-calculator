@@ -1,4 +1,4 @@
-(ns base-raiders.core-test
+(ns base-raiders.graph-test
   (:require
    [cljs.test :refer-macros [deftest testing is]]
    [base-raiders.graph :as g]))

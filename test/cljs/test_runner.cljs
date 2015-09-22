@@ -1,7 +1,8 @@
 (ns test-runner
   (:require
    [cljs.test :as test :refer-macros [run-tests] :refer [report]]
-   [base-raiders.core-test] ))
+   [base-raiders.graph-test]
+   [base-raiders.subs-test]))
 
 (enable-console-print!)
 
@@ -14,4 +15,5 @@
 (defn runner []
   (test/run-tests
    (test/empty-env ::test/default)
-   'base-raiders.core-test))
+   'base-raiders.graph-test
+   'base-raiders.subs-test))
