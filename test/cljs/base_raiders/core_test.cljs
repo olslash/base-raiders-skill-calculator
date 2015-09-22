@@ -17,6 +17,9 @@
              :dexterity      {:stealth 1 :security 1 :strike 2}
              :strike         {:parry 0 :dexterity 2}
              :parry          {:strike 0}
+             :security       {:dexterity 1 :notice 1}
+             :notice         {:security 1 :shoot 2}
+             :shoot          {:notice 2}
              :init-physical  {:init-mental 2 :init-social 2}
              :init-mental    {:init-physical 2 :init-social 2}
              :init-social    {:init-physical 2 :init-mental 2}})
@@ -31,9 +34,14 @@
                   :stealth        1
                   :dexterity      1
                   :strike         1
+                  :parry          1
+                  :security       1
+                  :notice         1
+                  :shoot          2
                   :init-physical  2
                   :init-mental    2
                   :init-social    2})
+
 
 (def max-path-cost 4)
 

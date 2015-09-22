@@ -1,8 +1,8 @@
 (ns base-raiders.graph)
 
-(def skills {:resist-damage  {:stress-cap 1
+(def skills {:resist-damage  {:stress-cap 1}
+             :stress-cap     {:physical-force 2
                               :resist-damage 1}
-             :stress-cap     {:physical-force 2}
              :physical-force {:climb 1 :leap 1
                               :stress-cap 2}
              :climb          {:move 1 :physical-force 1}
@@ -14,6 +14,9 @@
              :dexterity      {:stealth 1 :security 1 :strike 2}
              :strike         {:parry 0 :dexterity 2}
              :parry          {:strike 0}
+             :security       {:dexterity 1 :notice 1}
+             :notice         {:security 1 :shoot 2}
+             :shoot          {:notice 2}
              :init-physical  {:init-mental 2 :init-social 2}
              :init-mental    {:init-physical 2 :init-social 2}
              :init-social    {:init-physical 2 :init-mental 2}})
@@ -29,6 +32,9 @@
                   :dexterity      1
                   :strike         1
                   :parry          1
+                  :security       1
+                  :notice         1
+                  :shoot          2
                   :init-physical  2
                   :init-mental    2
                   :init-social    2})
