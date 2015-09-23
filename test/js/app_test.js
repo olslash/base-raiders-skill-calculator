@@ -48951,8 +48951,8 @@ base_raiders.graph.dfs = function base_raiders$graph$dfs(graph, goal) {
       return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [path], null);
     } else {
       return cljs.core.mapcat.call(null, function(current) {
-        return function(p1__12002_SHARP_) {
-          return base_raiders$graph$dfs_$_search.call(null, cljs.core.conj.call(null, path, p1__12002_SHARP_), cljs.core.conj.call(null, visited, p1__12002_SHARP_));
+        return function(p1__12330_SHARP_) {
+          return base_raiders$graph$dfs_$_search.call(null, cljs.core.conj.call(null, path, p1__12330_SHARP_), cljs.core.conj.call(null, visited, p1__12330_SHARP_));
         };
       }(current), cljs.core.remove.call(null, visited, cljs.core.keys.call(null, graph.call(null, current))));
     }
@@ -48964,10 +48964,10 @@ base_raiders.graph.paths_between = function base_raiders$graph$paths_between(gra
 base_raiders.graph.cost_of_path_movement = function base_raiders$graph$cost_of_path_movement(graph, path) {
   var x__4654__auto__ = base_raiders.db.max_path_cost;
   var y__4655__auto__ = cljs.core.first.call(null, cljs.core.reduce.call(null, function(x__4654__auto__) {
-    return function(p__12005, next) {
-      var vec__12006 = p__12005;
-      var cost = cljs.core.nth.call(null, vec__12006, 0, null);
-      var prev = cljs.core.nth.call(null, vec__12006, 1, null);
+    return function(p__12333, next) {
+      var vec__12334 = p__12333;
+      var cost = cljs.core.nth.call(null, vec__12334, 0, null);
+      var prev = cljs.core.nth.call(null, vec__12334, 1, null);
       var new_cost = cost + base_raiders.graph.edge_cost.call(null, graph, prev, next);
       return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new_cost, next], null);
     };
@@ -48992,8 +48992,8 @@ base_raiders.graph.cheapest_path = function base_raiders$graph$cheapest_path(gra
   return cljs.core.first.call(null, cljs.core.sort.call(null, cljs.core.partial.call(null, base_raiders.graph.compare_paths, graph), paths));
 };
 base_raiders.graph.path_to_cheapest_node = function base_raiders$graph$path_to_cheapest_node(graph, selected, node) {
-  var paths = cljs.core.map.call(null, function(p1__12007_SHARP_) {
-    return base_raiders.graph.cheapest_path.call(null, graph, node, p1__12007_SHARP_);
+  var paths = cljs.core.map.call(null, function(p1__12335_SHARP_) {
+    return base_raiders.graph.cheapest_path.call(null, graph, node, p1__12335_SHARP_);
   }, selected);
   var cheapest_path = cljs.core.first.call(null, cljs.core.sort.call(null, cljs.core.partial.call(null, base_raiders.graph.compare_paths, graph), paths));
   var or__4335__auto__ = cheapest_path;
@@ -49004,35 +49004,33 @@ base_raiders.graph.path_to_cheapest_node = function base_raiders$graph$path_to_c
   }
 };
 base_raiders.graph.game_cost_of_board = function base_raiders$graph$game_cost_of_board(graph, costs, selected) {
-  var nodes_cost = cljs.core.reduce.call(null, cljs.core._PLUS_, cljs.core.map.call(null, function(p1__12008_SHARP_) {
-    return p1__12008_SHARP_.call(null, costs);
+  var nodes_cost = cljs.core.reduce.call(null, cljs.core._PLUS_, cljs.core.map.call(null, function(p1__12336_SHARP_) {
+    return p1__12336_SHARP_.call(null, costs);
   }, selected));
-  var paths_cost = function(nodes_cost) {
-    return function() {
-      var unconnected_nodes = selected;
-      var sum = 0;
-      while (true) {
-        if (cljs.core.empty_QMARK_.call(null, unconnected_nodes)) {
-          return sum;
-        } else {
-          var to_connect = cljs.core.first.call(null, unconnected_nodes);
-          var cheapest_path = base_raiders.graph.path_to_cheapest_node.call(null, graph, cljs.core.remove.call(null, cljs.core.partial.call(null, cljs.core._EQ_, to_connect), selected), to_connect);
-          var connected = cljs.core.last.call(null, cheapest_path);
-          var cost = base_raiders.graph.cost_of_path_movement.call(null, graph, cheapest_path);
-          var G__12010 = cljs.core.remove.call(null, function(unconnected_nodes, sum, to_connect, cheapest_path, connected, cost, nodes_cost) {
-            return function(p1__12009_SHARP_) {
-              return cljs.core._EQ_.call(null, p1__12009_SHARP_, connected) || cljs.core._EQ_.call(null, p1__12009_SHARP_, to_connect);
-            };
-          }(unconnected_nodes, sum, to_connect, cheapest_path, connected, cost, nodes_cost), unconnected_nodes);
-          var G__12011 = cost + sum;
-          unconnected_nodes = G__12010;
-          sum = G__12011;
-          continue;
-        }
-        break;
+  var paths_cost = function() {
+    var unconnected_nodes = selected;
+    var sum = 0;
+    while (true) {
+      if (cljs.core.empty_QMARK_.call(null, unconnected_nodes)) {
+        return sum;
+      } else {
+        var to_connect = cljs.core.first.call(null, unconnected_nodes);
+        var cheapest_path = base_raiders.graph.path_to_cheapest_node.call(null, graph, cljs.core.remove.call(null, cljs.core.partial.call(null, cljs.core._EQ_, to_connect), selected), to_connect);
+        var connected = cljs.core.last.call(null, cheapest_path);
+        var cost = base_raiders.graph.cost_of_path_movement.call(null, graph, cheapest_path);
+        var G__12338 = cljs.core.remove.call(null, function(unconnected_nodes, sum, to_connect, cheapest_path, connected, cost, nodes_cost) {
+          return function(p1__12337_SHARP_) {
+            return cljs.core._EQ_.call(null, p1__12337_SHARP_, connected) || cljs.core._EQ_.call(null, p1__12337_SHARP_, to_connect);
+          };
+        }(unconnected_nodes, sum, to_connect, cheapest_path, connected, cost, nodes_cost), unconnected_nodes);
+        var G__12339 = cost + sum;
+        unconnected_nodes = G__12338;
+        sum = G__12339;
+        continue;
       }
-    };
-  }(nodes_cost).call(null);
+      break;
+    }
+  }();
   return nodes_cost + paths_cost;
 };
 goog.provide("clojure.string");
@@ -49772,25 +49770,25 @@ base_raiders.graph_test.graph_search = function base_raiders$graph_test$graph_se
 };
 base_raiders.graph_test.graph_search.cljs$lang$test = function() {
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "neighbors");
-  var ret__10520__auto___12043 = function() {
+  var ret__10520__auto___12371 = function() {
     try {
-      var values__10462__auto___12044 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.set.call(null, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null))), cljs.core.set.call(null, base_raiders.graph.neighbors.call(null, 
+      var values__10462__auto___12372 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.set.call(null, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null))), cljs.core.set.call(null, base_raiders.graph.neighbors.call(null, 
       base_raiders.graph_test.skills, new cljs.core.Keyword(null, "move", "move", -2110884309))));
-      var result__10463__auto___12045 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12044);
-      if (cljs.core.truth_(result__10463__auto___12045)) {
+      var result__10463__auto___12373 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12372);
+      if (cljs.core.truth_(result__10463__auto___12373)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), cljs.core.list(new cljs.core.Symbol("g", "neighbors", "g/neighbors", -1223999383, null), 
         new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "move", "move", -2110884309))), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, 
-        "leap", "leap", -97645251)], null))), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12044), new cljs.core.Keyword(null, "message", "message", -406056002), "finds neighbors of a node"], null));
+        "leap", "leap", -97645251)], null))), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12372), new cljs.core.Keyword(null, "message", "message", -406056002), "finds neighbors of a node"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), cljs.core.list(new cljs.core.Symbol("g", "neighbors", "g/neighbors", -1223999383, null), 
         new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "move", "move", -2110884309))), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, 
-        "leap", "leap", -97645251)], null))), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12044)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "finds neighbors of a node"], null));
+        "leap", "leap", -97645251)], null))), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12372)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "finds neighbors of a node"], null));
       }
-    } catch (e12018) {
-      var t__10500__auto___12046 = e12018;
+    } catch (e12346) {
+      var t__10500__auto___12374 = e12346;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), cljs.core.list(new cljs.core.Symbol("g", "neighbors", "g/neighbors", -1223999383, null), 
       new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "move", "move", -2110884309))), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, 
-      "leap", "leap", -97645251)], null))), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12046, new cljs.core.Keyword(null, "message", "message", -406056002), "finds neighbors of a node"], null));
+      "leap", "leap", -97645251)], null))), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12374, new cljs.core.Keyword(null, "message", "message", -406056002), "finds neighbors of a node"], null));
     }
     try {
       var values__10462__auto__ = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, null), base_raiders.graph.neighbors.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "not-in-graph", "not-in-graph", 1435903095)));
@@ -49803,46 +49801,46 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
         "not-in-graph", "not-in-graph", 1435903095)), null), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto__)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "returns nil if the node is not found"], null));
       }
       return result__10463__auto__;
-    } catch (e12019) {
-      var t__10500__auto__ = e12019;
+    } catch (e12347) {
+      var t__10500__auto__ = e12347;
       return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "neighbors", "g/neighbors", -1223999383, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
       new cljs.core.Keyword(null, "not-in-graph", "not-in-graph", 1435903095)), null), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto__, new cljs.core.Keyword(null, "message", "message", -406056002), "returns nil if the node is not found"], null));
     }
   }();
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.rest);
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "edge-cost");
-  var ret__10520__auto___12047 = function() {
+  var ret__10520__auto___12375 = function() {
     try {
-      var values__10462__auto___12048 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 0), base_raiders.graph.edge_cost.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)));
-      var result__10463__auto___12049 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12048);
-      if (cljs.core.truth_(result__10463__auto___12049)) {
+      var values__10462__auto___12376 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 0), base_raiders.graph.edge_cost.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)));
+      var result__10463__auto___12377 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12376);
+      if (cljs.core.truth_(result__10463__auto___12377)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "edge-cost", "g/edge-cost", -512008205, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, 
-        "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12048), new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 if no path exists"], null));
+        "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12376), new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 if no path exists"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "edge-cost", "g/edge-cost", -512008205, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, 
-        "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12048)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 if no path exists"], 
+        "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12376)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 if no path exists"], 
         null));
       }
-    } catch (e12020) {
-      var t__10500__auto___12050 = e12020;
+    } catch (e12348) {
+      var t__10500__auto___12378 = e12348;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "edge-cost", "g/edge-cost", -512008205, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, 
-      "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12050, new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 if no path exists"], null));
+      "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12378, new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 if no path exists"], null));
     }
     try {
-      var values__10462__auto___12051 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 0), base_raiders.graph.edge_cost.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "climb", "climb", -1345384598)));
-      var result__10463__auto___12052 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12051);
-      if (cljs.core.truth_(result__10463__auto___12052)) {
+      var values__10462__auto___12379 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 0), base_raiders.graph.edge_cost.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "climb", "climb", -1345384598)));
+      var result__10463__auto___12380 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12379);
+      if (cljs.core.truth_(result__10463__auto___12380)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "edge-cost", "g/edge-cost", -512008205, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, 
-        "climb", "climb", -1345384598), new cljs.core.Keyword(null, "climb", "climb", -1345384598)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12051), new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 for a node to itself"], null));
+        "climb", "climb", -1345384598), new cljs.core.Keyword(null, "climb", "climb", -1345384598)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12379), new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 for a node to itself"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "edge-cost", "g/edge-cost", -512008205, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, 
-        "climb", "climb", -1345384598), new cljs.core.Keyword(null, "climb", "climb", -1345384598)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12051)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 for a node to itself"], 
+        "climb", "climb", -1345384598), new cljs.core.Keyword(null, "climb", "climb", -1345384598)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12379)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 for a node to itself"], 
         null));
       }
-    } catch (e12021) {
-      var t__10500__auto___12053 = e12021;
+    } catch (e12349) {
+      var t__10500__auto___12381 = e12349;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "edge-cost", "g/edge-cost", -512008205, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, 
-      "climb", "climb", -1345384598), new cljs.core.Keyword(null, "climb", "climb", -1345384598)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12053, new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 for a node to itself"], null));
+      "climb", "climb", -1345384598), new cljs.core.Keyword(null, "climb", "climb", -1345384598)), 0), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12381, new cljs.core.Keyword(null, "message", "message", -406056002), "returns 0 for a node to itself"], null));
     }
     try {
       var values__10462__auto__ = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 2), base_raiders.graph.edge_cost.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)));
@@ -49856,40 +49854,40 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
         null));
       }
       return result__10463__auto__;
-    } catch (e12022) {
-      var t__10500__auto__ = e12022;
+    } catch (e12350) {
+      var t__10500__auto__ = e12350;
       return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "edge-cost", "g/edge-cost", -512008205, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
       new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto__, new cljs.core.Keyword(null, "message", "message", -406056002), "gives the correct cost"], null));
     }
   }();
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.rest);
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "paths-between");
-  var ret__10520__auto___12054 = function() {
+  var ret__10520__auto___12382 = function() {
     try {
-      var value__10465__auto___12055 = function() {
+      var value__10465__auto___12383 = function() {
         var paths = base_raiders.graph.paths_between.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "move", "move", -2110884309));
         return cljs.core._EQ_.call(null, cljs.core.set.call(null, paths), cljs.core.PersistentHashSet.fromArray([new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, 
         "move", "move", -2110884309)], null), new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)], true));
       }();
-      if (value__10465__auto___12055) {
+      if (value__10465__auto___12383) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "let", "let", 358118826, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "paths", "paths", -166858061, null), cljs.core.list(new cljs.core.Symbol("g", 
         "paths-between", "g/paths-between", 1848387645, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "move", "move", -2110884309))], null), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), new cljs.core.Symbol(null, "paths", "paths", -166858061, null)), cljs.core.PersistentHashSet.fromArray([new cljs.core.PersistentVector(null, 
         5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309)], null), new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, 
-        "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)], true))), new cljs.core.Keyword(null, "actual", "actual", 107306363), value__10465__auto___12055, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result from a leaf"], 
+        "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)], true))), new cljs.core.Keyword(null, "actual", "actual", 107306363), value__10465__auto___12383, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result from a leaf"], 
         null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "let", "let", 358118826, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "paths", "paths", -166858061, null), cljs.core.list(new cljs.core.Symbol("g", 
         "paths-between", "g/paths-between", 1848387645, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "move", "move", -2110884309))], null), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), new cljs.core.Symbol(null, "paths", "paths", -166858061, null)), cljs.core.PersistentHashSet.fromArray([new cljs.core.PersistentVector(null, 
         5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309)], null), new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, 
-        "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)], true))), new cljs.core.Keyword(null, "actual", "actual", 107306363), value__10465__auto___12055, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result from a leaf"], 
+        "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)], true))), new cljs.core.Keyword(null, "actual", "actual", 107306363), value__10465__auto___12383, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result from a leaf"], 
         null));
       }
-    } catch (e12023) {
-      var t__10500__auto___12056 = e12023;
+    } catch (e12351) {
+      var t__10500__auto___12384 = e12351;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "let", "let", 358118826, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "paths", "paths", -166858061, null), cljs.core.list(new cljs.core.Symbol("g", 
       "paths-between", "g/paths-between", 1848387645, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "move", "move", -2110884309))], null), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), new cljs.core.Symbol(null, "paths", "paths", -166858061, null)), cljs.core.PersistentHashSet.fromArray([new cljs.core.PersistentVector(null, 
       5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309)], null), new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, 
-      "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)], true))), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12056, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result from a leaf"], 
+      "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)], true))), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12384, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result from a leaf"], 
       null));
     }
     try {
@@ -49910,8 +49908,8 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
         -1345384598), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)], true))), new cljs.core.Keyword(null, "actual", "actual", 107306363), value__10465__auto__, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result from the middle of the graph"], null));
       }
       return value__10465__auto__;
-    } catch (e12024) {
-      var t__10500__auto__ = e12024;
+    } catch (e12352) {
+      var t__10500__auto__ = e12352;
       return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "let", "let", 358118826, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "paths", "paths", -166858061, null), cljs.core.list(new cljs.core.Symbol("g", 
       "paths-between", "g/paths-between", 1848387645, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453))], null), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol(null, "set", "set", 1945134081, null), new cljs.core.Symbol(null, "paths", "paths", -166858061, null)), cljs.core.PersistentHashSet.fromArray([new cljs.core.PersistentVector(null, 
       4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "climb", "climb", 
@@ -49920,40 +49918,40 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
   }();
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.rest);
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "cost-of-path-movement");
-  var ret__10520__auto___12057 = function() {
+  var ret__10520__auto___12385 = function() {
     try {
-      var values__10462__auto___12058 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 1), base_raiders.graph.cost_of_path_movement.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)));
-      var result__10463__auto___12059 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12058);
-      if (cljs.core.truth_(result__10463__auto___12059)) {
+      var values__10462__auto___12386 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 1), base_raiders.graph.cost_of_path_movement.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)));
+      var result__10463__auto___12387 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12386);
+      if (cljs.core.truth_(result__10463__auto___12387)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cost-of-path-movement", "g/cost-of-path-movement", -1220182057, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)), 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12058), new cljs.core.Keyword(null, "message", "message", -406056002), "short path"], null));
+        null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)), 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12386), new cljs.core.Keyword(null, "message", "message", -406056002), "short path"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cost-of-path-movement", "g/cost-of-path-movement", -1220182057, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)), 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12058)), 
+        null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)), 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12386)), 
         new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "short path"], null));
       }
-    } catch (e12025) {
-      var t__10500__auto___12060 = e12025;
+    } catch (e12353) {
+      var t__10500__auto___12388 = e12353;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cost-of-path-movement", "g/cost-of-path-movement", -1220182057, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-      null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)), 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12060, new cljs.core.Keyword(null, "message", "message", -406056002), "short path"], null));
+      null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453)], null)), 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12388, new cljs.core.Keyword(null, "message", "message", -406056002), "short path"], null));
     }
     try {
-      var values__10462__auto___12061 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 2), base_raiders.graph.cost_of_path_movement.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, 
+      var values__10462__auto___12389 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 2), base_raiders.graph.cost_of_path_movement.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, 
       "dodge", "dodge", -1556666427)], null)));
-      var result__10463__auto___12062 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12061);
-      if (cljs.core.truth_(result__10463__auto___12062)) {
+      var result__10463__auto___12390 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12389);
+      if (cljs.core.truth_(result__10463__auto___12390)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cost-of-path-movement", "g/cost-of-path-movement", -1220182057, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12061), new cljs.core.Keyword(null, 
+        null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12389), new cljs.core.Keyword(null, 
         "message", "message", -406056002), "med path"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cost-of-path-movement", "g/cost-of-path-movement", -1220182057, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, 
-        new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12061)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "med path"], null));
+        new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12389)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "med path"], null));
       }
-    } catch (e12026) {
-      var t__10500__auto___12063 = e12026;
+    } catch (e12354) {
+      var t__10500__auto___12391 = e12354;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cost-of-path-movement", "g/cost-of-path-movement", -1220182057, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-      null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12063, new cljs.core.Keyword(null, "message", "message", -406056002), 
+      null), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12391, new cljs.core.Keyword(null, "message", "message", -406056002), 
       "med path"], null));
     }
     try {
@@ -49971,8 +49969,8 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
         new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "considers max path cost"], null));
       }
       return result__10463__auto__;
-    } catch (e12027) {
-      var t__10500__auto__ = e12027;
+    } catch (e12355) {
+      var t__10500__auto__ = e12355;
       return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cost-of-path-movement", "g/cost-of-path-movement", -1220182057, null), new cljs.core.Symbol(null, "skills", "skills", 
       -1695734343, null), new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), 
       new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471), new cljs.core.Keyword(null, "parry", "parry", 1604471676)], null)), new cljs.core.Symbol(null, "max-path-cost", "max-path-cost", 961138584, null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto__, new cljs.core.Keyword(null, "message", "message", -406056002), "considers max path cost"], null));
@@ -49980,85 +49978,85 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
   }();
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.rest);
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "cheapest-path");
-  var ret__10520__auto___12064 = function() {
+  var ret__10520__auto___12392 = function() {
     try {
-      var values__10462__auto___12065 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), base_raiders.graph.cheapest_path.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "move", "move", -2110884309)));
-      var result__10463__auto___12066 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12065);
-      if (cljs.core.truth_(result__10463__auto___12066)) {
+      var values__10462__auto___12393 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), base_raiders.graph.cheapest_path.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "move", "move", -2110884309)));
+      var result__10463__auto___12394 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12393);
+      if (cljs.core.truth_(result__10463__auto___12394)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
-        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12065), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to itself"], 
+        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12393), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to itself"], 
         null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
-        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12065)), 
+        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12393)), 
         new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to itself"], null));
       }
-    } catch (e12028) {
-      var t__10500__auto___12067 = e12028;
+    } catch (e12356) {
+      var t__10500__auto___12395 = e12356;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
-      new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12067, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to itself"], null));
+      new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12395, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to itself"], null));
     }
     try {
-      var values__10462__auto___12068 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), base_raiders.graph.cheapest_path.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", 
+      var values__10462__auto___12396 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), base_raiders.graph.cheapest_path.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", 
       -1556666427)));
-      var result__10463__auto___12069 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12068);
-      if (cljs.core.truth_(result__10463__auto___12069)) {
+      var result__10463__auto___12397 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12396);
+      if (cljs.core.truth_(result__10463__auto___12397)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
-        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12068), new cljs.core.Keyword(null, "message", 
+        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12396), new cljs.core.Keyword(null, "message", 
         "message", -406056002), "correct result for a node to its neighbor"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
         new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, 
-        "\x3d", "\x3d", -1501502141, null), values__10462__auto___12068)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to its neighbor"], null));
+        "\x3d", "\x3d", -1501502141, null), values__10462__auto___12396)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to its neighbor"], null));
       }
-    } catch (e12029) {
-      var t__10500__auto___12070 = e12029;
+    } catch (e12357) {
+      var t__10500__auto___12398 = e12357;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
-      new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12070, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to its neighbor"], 
+      new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12398, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result for a node to its neighbor"], 
       null));
     }
     try {
-      var values__10462__auto___12071 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, null), base_raiders.graph.cheapest_path.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)));
-      var result__10463__auto___12072 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12071);
-      if (cljs.core.truth_(result__10463__auto___12072)) {
+      var values__10462__auto___12399 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, null), base_raiders.graph.cheapest_path.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)));
+      var result__10463__auto___12400 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12399);
+      if (cljs.core.truth_(result__10463__auto___12400)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
-        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)), null), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12071), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result if no path is found"], null));
+        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)), null), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12399), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result if no path is found"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
-        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)), null), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12071)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", 
+        new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)), null), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12399)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", 
         "message", -406056002), "correct result if no path is found"], null));
       }
-    } catch (e12030) {
-      var t__10500__auto___12073 = e12030;
+    } catch (e12358) {
+      var t__10500__auto___12401 = e12358;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), 
-      new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)), null), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12073, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result if no path is found"], null));
+      new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)), null), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12401, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result if no path is found"], null));
     }
     try {
-      var value__10465__auto___12074 = function() {
+      var value__10465__auto___12402 = function() {
         var path = base_raiders.graph.cheapest_path.call(null, base_raiders.graph_test.skills, new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "leap", "leap", -97645251));
         return cljs.core._EQ_.call(null, path, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null)) || cljs.core._EQ_.call(null, path, new cljs.core.PersistentVector(null, 6, 5, cljs.core.PersistentVector.EMPTY_NODE, 
         [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null));
       }();
-      if (value__10465__auto___12074) {
+      if (value__10465__auto___12402) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "let", "let", 358118826, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "path", "path", 1452340359, null), cljs.core.list(new cljs.core.Symbol("g", 
         "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "leap", "leap", -97645251))], null), cljs.core.list(new cljs.core.Symbol(null, "or", "or", 1876275696, null), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), new cljs.core.Symbol(null, "path", "path", 1452340359, null), new cljs.core.PersistentVector(null, 
         4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null)), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), new cljs.core.Symbol(null, "path", "path", 1452340359, null), new cljs.core.PersistentVector(null, 
         6, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null)))), new cljs.core.Keyword(null, "actual", "actual", 
-        107306363), value__10465__auto___12074, new cljs.core.Keyword(null, "message", "message", -406056002), "correct path -- one is longer but both score the same because of max-path-costs"], null));
+        107306363), value__10465__auto___12402, new cljs.core.Keyword(null, "message", "message", -406056002), "correct path -- one is longer but both score the same because of max-path-costs"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "let", "let", 358118826, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "path", "path", 1452340359, null), cljs.core.list(new cljs.core.Symbol("g", 
         "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "leap", "leap", -97645251))], null), cljs.core.list(new cljs.core.Symbol(null, "or", "or", 1876275696, null), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), new cljs.core.Symbol(null, "path", "path", 1452340359, null), new cljs.core.PersistentVector(null, 
         4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null)), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), new cljs.core.Symbol(null, "path", "path", 1452340359, null), new cljs.core.PersistentVector(null, 
         6, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null)))), new cljs.core.Keyword(null, "actual", "actual", 
-        107306363), value__10465__auto___12074, new cljs.core.Keyword(null, "message", "message", -406056002), "correct path -- one is longer but both score the same because of max-path-costs"], null));
+        107306363), value__10465__auto___12402, new cljs.core.Keyword(null, "message", "message", -406056002), "correct path -- one is longer but both score the same because of max-path-costs"], null));
       }
-    } catch (e12031) {
-      var t__10500__auto___12075 = e12031;
+    } catch (e12359) {
+      var t__10500__auto___12403 = e12359;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "let", "let", 358118826, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "path", "path", 1452340359, null), cljs.core.list(new cljs.core.Symbol("g", 
       "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "leap", "leap", -97645251))], null), cljs.core.list(new cljs.core.Symbol(null, "or", "or", 1876275696, null), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), new cljs.core.Symbol(null, "path", "path", 1452340359, null), new cljs.core.PersistentVector(null, 
       4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null)), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), new cljs.core.Symbol(null, "path", "path", 1452340359, null), new cljs.core.PersistentVector(null, 
       6, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "leap", "leap", -97645251)], null)))), new cljs.core.Keyword(null, "actual", "actual", 
-      107306363), t__10500__auto___12075, new cljs.core.Keyword(null, "message", "message", -406056002), "correct path -- one is longer but both score the same because of max-path-costs"], null));
+      107306363), t__10500__auto___12403, new cljs.core.Keyword(null, "message", "message", -406056002), "correct path -- one is longer but both score the same because of max-path-costs"], null));
     }
     try {
       var value__10465__auto__ = function() {
@@ -50080,8 +50078,8 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
         "actual", 107306363), value__10465__auto__, new cljs.core.Keyword(null, "message", "message", -406056002), "correct path with two equal possibilities"], null));
       }
       return value__10465__auto__;
-    } catch (e12032) {
-      var t__10500__auto__ = e12032;
+    } catch (e12360) {
+      var t__10500__auto__ = e12360;
       return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "let", "let", 358118826, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null, "path", "path", 1452340359, null), cljs.core.list(new cljs.core.Symbol("g", 
       "cheapest-path", "g/cheapest-path", -1466664913, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "move", "move", -2110884309))], null), cljs.core.list(new cljs.core.Symbol(null, "or", "or", 1876275696, null), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), new cljs.core.Symbol(null, "path", "path", 1452340359, null), new cljs.core.PersistentVector(null, 
       5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), new cljs.core.Symbol(null, 
@@ -50091,87 +50089,87 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
   }();
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.rest);
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "path-to-cheapest-node");
-  var ret__10520__auto___12076 = function() {
+  var ret__10520__auto___12404 = function() {
     try {
-      var values__10462__auto___12077 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), base_raiders.graph.path_to_cheapest_node.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], 
+      var values__10462__auto___12405 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), base_raiders.graph.path_to_cheapest_node.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], 
       null), new cljs.core.Keyword(null, "move", "move", -2110884309)));
-      var result__10463__auto___12078 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12077);
-      if (cljs.core.truth_(result__10463__auto___12078)) {
+      var result__10463__auto___12406 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12405);
+      if (cljs.core.truth_(result__10463__auto___12406)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12077), 
+        null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12405), 
         new cljs.core.Keyword(null, "message", "message", -406056002), "the node itself is cheapest when no other paths exist"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, 
-        cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12077)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "the node itself is cheapest when no other paths exist"], null));
+        cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12405)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "the node itself is cheapest when no other paths exist"], null));
       }
-    } catch (e12033) {
-      var t__10500__auto___12079 = e12033;
+    } catch (e12361) {
+      var t__10500__auto___12407 = e12361;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-      null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12079, new cljs.core.Keyword(null, 
+      null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12407, new cljs.core.Keyword(null, 
       "message", "message", -406056002), "the node itself is cheapest when no other paths exist"], null));
     }
     try {
-      var values__10462__auto___12080 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), base_raiders.graph.path_to_cheapest_node.call(null, 
+      var values__10462__auto___12408 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), base_raiders.graph.path_to_cheapest_node.call(null, 
       base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)));
-      var result__10463__auto___12081 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12080);
-      if (cljs.core.truth_(result__10463__auto___12081)) {
+      var result__10463__auto___12409 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12408);
+      if (cljs.core.truth_(result__10463__auto___12409)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), 
-        new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12080), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result when one path is nil"], null));
+        new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12408), new cljs.core.Keyword(null, "message", "message", -406056002), "correct result when one path is nil"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), 
-        new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12080)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", 
+        new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12408)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", 
         "message", -406056002), "correct result when one path is nil"], null));
       }
-    } catch (e12034) {
-      var t__10500__auto___12082 = e12034;
+    } catch (e12362) {
+      var t__10500__auto___12410 = e12362;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
       null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), 
-      new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12082, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result when one path is nil"], null));
+      new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12410, new cljs.core.Keyword(null, "message", "message", -406056002), "correct result when one path is nil"], null));
     }
     try {
-      var values__10462__auto___12083 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null)), base_raiders.graph.path_to_cheapest_node.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 
+      var values__10462__auto___12411 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null)), base_raiders.graph.path_to_cheapest_node.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 
       2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)));
-      var result__10463__auto___12084 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12083);
-      if (cljs.core.truth_(result__10463__auto___12084)) {
+      var result__10463__auto___12412 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12411);
+      if (cljs.core.truth_(result__10463__auto___12412)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "move", "move", -2110884309), 
-        new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12083), new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 1"], null));
+        new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12411), new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 1"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "move", "move", -2110884309), 
-        new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12083)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 1"], 
+        new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12411)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 1"], 
         null));
       }
-    } catch (e12035) {
-      var t__10500__auto___12085 = e12035;
+    } catch (e12363) {
+      var t__10500__auto___12413 = e12363;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
       null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null), new cljs.core.Keyword(null, "dodge", "dodge", -1556666427)), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "dodge", "dodge", -1556666427), new cljs.core.Keyword(null, "move", "move", -2110884309), 
-      new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12085, new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 1"], null));
+      new cljs.core.Keyword(null, "climb", "climb", -1345384598)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12413, new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 1"], null));
     }
     try {
-      var values__10462__auto___12086 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 8, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, 
+      var values__10462__auto___12414 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, new cljs.core.PersistentVector(null, 8, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, 
       "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "security", "security", 886963079)], null)), base_raiders.graph.path_to_cheapest_node.call(null, base_raiders.graph_test.skills, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "parry", 
       "parry", 1604471676)], null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391)));
-      var result__10463__auto___12087 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12086);
-      if (cljs.core.truth_(result__10463__auto___12087)) {
+      var result__10463__auto___12415 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12414);
+      if (cljs.core.truth_(result__10463__auto___12415)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "parry", "parry", 1604471676)], null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391)), new cljs.core.PersistentVector(null, 8, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", 
         "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "security", "security", 886963079)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, 
-        cljs.core._EQ_, values__10462__auto___12086), new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 2"], null));
+        cljs.core._EQ_, values__10462__auto___12414), new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 2"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "parry", "parry", 1604471676)], null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391)), new cljs.core.PersistentVector(null, 8, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", 
         "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "security", "security", 886963079)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, 
-        cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12086)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 2"], null));
+        cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12414)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 2"], null));
       }
-    } catch (e12036) {
-      var t__10500__auto___12088 = e12036;
+    } catch (e12364) {
+      var t__10500__auto___12416 = e12364;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
       null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "parry", "parry", 1604471676)], null), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391)), new cljs.core.PersistentVector(null, 8, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "stress-cap", 
-      "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "security", "security", 886963079)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12088, 
+      "stress-cap", 401347453), new cljs.core.Keyword(null, "physical-force", "physical-force", -1879630490), new cljs.core.Keyword(null, "climb", "climb", -1345384598), new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", -1775911138), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "security", "security", 886963079)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12416, 
       new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 2"], null));
     }
     try {
@@ -50189,8 +50187,8 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
         null));
       }
       return result__10463__auto__;
-    } catch (e12037) {
-      var t__10500__auto__ = e12037;
+    } catch (e12365) {
+      var t__10500__auto__ = e12365;
       return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "path-to-cheapest-node", "g/path-to-cheapest-node", 899986031, null), new cljs.core.Symbol(null, "skills", "skills", 
       -1695734343, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148)], null), new cljs.core.Keyword(null, "move", "move", -2110884309)), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "move", "move", -2110884309), new cljs.core.Keyword(null, "stealth", "stealth", 
       -1775911138), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148)], null)), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto__, new cljs.core.Keyword(null, "message", "message", -406056002), "finds the path to the cheapest node - 3"], null));
@@ -50200,74 +50198,74 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
   cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "game-cost-of-board");
   var ret__10520__auto__ = function() {
     try {
-      var values__10462__auto___12089 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 2), base_raiders.graph.game_cost_of_board.call(null, base_raiders.graph_test.skills, base_raiders.graph_test.skill_costs, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)));
-      var result__10463__auto___12090 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12089);
-      if (cljs.core.truth_(result__10463__auto___12090)) {
+      var values__10462__auto___12417 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 2), base_raiders.graph.game_cost_of_board.call(null, base_raiders.graph_test.skills, base_raiders.graph_test.skill_costs, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)));
+      var result__10463__auto___12418 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12417);
+      if (cljs.core.truth_(result__10463__auto___12418)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12089), new cljs.core.Keyword(null, "message", "message", -406056002), "one skill selected"], null));
+        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12417), new cljs.core.Keyword(null, "message", "message", -406056002), "one skill selected"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12089)), 
+        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12417)), 
         new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "one skill selected"], null));
       }
-    } catch (e12038) {
-      var t__10500__auto___12091 = e12038;
+    } catch (e12366) {
+      var t__10500__auto___12419 = e12366;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-      null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12091, new cljs.core.Keyword(null, "message", "message", -406056002), "one skill selected"], null));
+      null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 2), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12419, new cljs.core.Keyword(null, "message", "message", -406056002), "one skill selected"], null));
     }
     try {
-      var values__10462__auto___12092 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 5), base_raiders.graph.game_cost_of_board.call(null, base_raiders.graph_test.skills, base_raiders.graph_test.skill_costs, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)));
-      var result__10463__auto___12093 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12092);
-      if (cljs.core.truth_(result__10463__auto___12093)) {
+      var values__10462__auto___12420 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 5), base_raiders.graph.game_cost_of_board.call(null, base_raiders.graph_test.skills, base_raiders.graph_test.skill_costs, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)));
+      var result__10463__auto___12421 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12420);
+      if (cljs.core.truth_(result__10463__auto___12421)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12092), new cljs.core.Keyword(null, "message", "message", -406056002), 
+        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12420), new cljs.core.Keyword(null, "message", "message", -406056002), 
         "two skills selected"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, 
-        "\x3d", "\x3d", -1501502141, null), values__10462__auto___12092)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "two skills selected"], null));
+        "\x3d", "\x3d", -1501502141, null), values__10462__auto___12420)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "two skills selected"], null));
       }
-    } catch (e12039) {
-      var t__10500__auto___12094 = e12039;
+    } catch (e12367) {
+      var t__10500__auto___12422 = e12367;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-      null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12094, new cljs.core.Keyword(null, "message", "message", -406056002), "two skills selected"], null));
+      null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "strike", "strike", -1173815471)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12422, new cljs.core.Keyword(null, "message", "message", -406056002), "two skills selected"], null));
     }
     try {
-      var values__10462__auto___12095 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 11), base_raiders.graph.game_cost_of_board.call(null, base_raiders.graph_test.skills, base_raiders.graph_test.skill_costs, new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "move", "move", 
+      var values__10462__auto___12423 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 11), base_raiders.graph.game_cost_of_board.call(null, base_raiders.graph_test.skills, base_raiders.graph_test.skill_costs, new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "move", "move", 
       -2110884309)], null)));
-      var result__10463__auto___12096 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12095);
-      if (cljs.core.truth_(result__10463__auto___12096)) {
+      var result__10463__auto___12424 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12423);
+      if (cljs.core.truth_(result__10463__auto___12424)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), 11), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12095), 
+        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), 11), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12423), 
         new cljs.core.Keyword(null, "message", "message", -406056002), "three skills selected"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), 11), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 
-        cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12095)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "three skills selected"], null));
+        cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12423)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "three skills selected"], null));
       }
-    } catch (e12040) {
-      var t__10500__auto___12097 = e12040;
+    } catch (e12368) {
+      var t__10500__auto___12425 = e12368;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-      null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), 11), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12097, new cljs.core.Keyword(null, "message", 
+      null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "stress-cap", "stress-cap", 401347453), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), 11), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12425, new cljs.core.Keyword(null, "message", 
       "message", -406056002), "three skills selected"], null));
     }
     try {
-      var values__10462__auto___12098 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 5), base_raiders.graph.game_cost_of_board.call(null, base_raiders.graph_test.skills, base_raiders.graph_test.skill_costs, new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "init-physical", "init-physical", 
+      var values__10462__auto___12426 = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 5), base_raiders.graph.game_cost_of_board.call(null, base_raiders.graph_test.skills, base_raiders.graph_test.skill_costs, new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "init-physical", "init-physical", 
       -2001457878)], null)));
-      var result__10463__auto___12099 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12098);
-      if (cljs.core.truth_(result__10463__auto___12099)) {
+      var result__10463__auto___12427 = cljs.core.apply.call(null, cljs.core._EQ_, values__10462__auto___12426);
+      if (cljs.core.truth_(result__10463__auto___12427)) {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12098), 
+        null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10462__auto___12426), 
         new cljs.core.Keyword(null, "message", "message", -406056002), "unconnected skills"], null));
       } else {
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
         null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, 
-        cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12098)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "unconnected skills"], null));
+        cljs.core.List.EMPTY, cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto___12426)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "unconnected skills"], null));
       }
-    } catch (e12041) {
-      var t__10500__auto___12100 = e12041;
+    } catch (e12369) {
+      var t__10500__auto___12428 = e12369;
       cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
-      null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12100, new cljs.core.Keyword(null, 
+      null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "security", "security", 886963079), new cljs.core.Keyword(null, "dexterity", "dexterity", -1437655148), new cljs.core.Keyword(null, "init-physical", "init-physical", -2001457878)], null)), 5), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto___12428, new cljs.core.Keyword(null, 
       "message", "message", -406056002), "unconnected skills"], null));
     }
     try {
@@ -50284,8 +50282,8 @@ base_raiders.graph_test.graph_search.cljs$lang$test = function() {
         cljs.core.cons.call(null, new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10462__auto__)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "one skill selected"], null));
       }
       return result__10463__auto__;
-    } catch (e12042) {
-      var t__10500__auto__ = e12042;
+    } catch (e12370) {
+      var t__10500__auto__ = e12370;
       return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), cljs.core.list(new cljs.core.Symbol("g", "game-cost-of-board", "g/game-cost-of-board", -1073375506, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, 
       null), new cljs.core.Symbol(null, "skill-costs", "skill-costs", -908073360, null), new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "parry", "parry", 1604471676), new cljs.core.Keyword(null, "resist-damage", "resist-damage", 681307391), new cljs.core.Keyword(null, "move", "move", -2110884309)], null)), 12), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10500__auto__, new cljs.core.Keyword(null, "message", "message", 
       -406056002), "one skill selected"], null));
@@ -63737,15 +63735,15 @@ cljs.core._add_method.call(null, cljs.test.report, new cljs.core.PersistentVecto
 });
 test_runner.runner = function test_runner$runner() {
   return cljs.test.run_block.call(null, function() {
-    var env12112 = cljs.test.empty_env.call(null, new cljs.core.Keyword("cljs.test", "default", "cljs.test/default", -1581405322));
-    var summary12113 = cljs.core.volatile_BANG_.call(null, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "summary", "summary", 380847952), new cljs.core.Keyword(null, "fail", "fail", 1706214930), 0, new cljs.core.Keyword(null, "error", "error", -978969032), 0, new cljs.core.Keyword(null, "pass", "pass", 1574159993), 0, new cljs.core.Keyword(null, "test", "test", 577538877), 0], null));
-    return cljs.core.concat.call(null, cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
+    var env12433 = cljs.test.empty_env.call(null, new cljs.core.Keyword("cljs.test", "default", "cljs.test/default", -1581405322));
+    var summary12434 = cljs.core.volatile_BANG_.call(null, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "summary", "summary", 380847952), new cljs.core.Keyword(null, "fail", "fail", 1706214930), 0, new cljs.core.Keyword(null, "error", "error", -978969032), 0, new cljs.core.Keyword(null, "pass", "pass", 1574159993), 0, new cljs.core.Keyword(null, "test", "test", 577538877), 0], null));
+    return cljs.core.concat.call(null, cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12433, summary12434) {
       return function() {
-        cljs.test.set_env_BANG_.call(null, env12112);
+        cljs.test.set_env_BANG_.call(null, env12433);
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Symbol(null, "base-raiders.graph-test", "base-raiders.graph-test", 1053591480, null), new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "begin-test-ns", "begin-test-ns", -1701237033)], null));
         return cljs.test.block.call(null, function() {
           var env__10567__auto__ = cljs.test.get_current_env.call(null);
-          return cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12112, summary12113) {
+          return cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12433, summary12434) {
             return function() {
               if (env__10567__auto__ == null) {
                 cljs.test.set_env_BANG_.call(null, cljs.test.empty_env.call(null));
@@ -63753,7 +63751,7 @@ test_runner.runner = function test_runner$runner() {
               }
               return null;
             };
-          }(env__10567__auto__, env12112, summary12113)], null), cljs.test.test_vars_block.call(null, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Var(function() {
+          }(env__10567__auto__, env12433, summary12434)], null), cljs.test.test_vars_block.call(null, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Var(function() {
             return base_raiders.graph_test.skills;
           }, new cljs.core.Symbol("base-raiders.graph-test", "skills", "base-raiders.graph-test/skills", 1928316922, null), cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Keyword(null, "name", "name", 1843675177), new cljs.core.Keyword(null, "file", "file", -1269645878), new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), new cljs.core.Keyword(null, "column", "column", 2078222095), new cljs.core.Keyword(null, "line", "line", 
           212345235), new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), new cljs.core.Keyword(null, "arglists", "arglists", 1661989754), new cljs.core.Keyword(null, "doc", "doc", 1913296891), new cljs.core.Keyword(null, "test", "test", 577538877)], [new cljs.core.Symbol(null, "base-raiders.graph-test", "base-raiders.graph-test", 1053591480, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), "/Users/mrobb/Dev/clojure/base-raiders/test/cljs/base_raiders/graph_test.cljs", 
@@ -63769,7 +63767,7 @@ test_runner.runner = function test_runner$runner() {
             return base_raiders.graph_test.graph_search;
           }, new cljs.core.Symbol("base-raiders.graph-test", "graph-search", "base-raiders.graph-test/graph-search", 2132041664, null), cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Keyword(null, "name", "name", 1843675177), new cljs.core.Keyword(null, "file", "file", -1269645878), new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), new cljs.core.Keyword(null, "column", "column", 2078222095), new cljs.core.Keyword(null, 
           "line", "line", 212345235), new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), new cljs.core.Keyword(null, "arglists", "arglists", 1661989754), new cljs.core.Keyword(null, "doc", "doc", 1913296891), new cljs.core.Keyword(null, "test", "test", 577538877)], [new cljs.core.Symbol(null, "base-raiders.graph-test", "base-raiders.graph-test", 1053591480, null), new cljs.core.Symbol(null, "graph-search", "graph-search", -954828413, null), "/Users/mrobb/Dev/clojure/base-raiders/test/cljs/base_raiders/graph_test.cljs", 
-          22, 10, 48, 48, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.graph_test.graph_search) ? base_raiders.graph_test.graph_search.cljs$lang$test : null]))], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12112, summary12113) {
+          22, 10, 48, 48, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.graph_test.graph_search) ? base_raiders.graph_test.graph_search.cljs$lang$test : null]))], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12433, summary12434) {
             return function() {
               if (env__10567__auto__ == null) {
                 return cljs.test.clear_env_BANG_.call(null);
@@ -63777,24 +63775,24 @@ test_runner.runner = function test_runner$runner() {
                 return null;
               }
             };
-          }(env__10567__auto__, env12112, summary12113)], null));
+          }(env__10567__auto__, env12433, summary12434)], null));
         }());
       };
-    }(env12112, summary12113), function(env12112, summary12113) {
+    }(env12433, summary12434), function(env12433, summary12434) {
       return function() {
         return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Symbol(null, "base-raiders.graph-test", "base-raiders.graph-test", 1053591480, null), new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "end-test-ns", "end-test-ns", 1620675645)], null));
       };
-    }(env12112, summary12113)], null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
+    }(env12433, summary12434)], null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12433, summary12434) {
       return function() {
-        return cljs.core._vreset_BANG_.call(null, summary12113, cljs.core.partial.call(null, cljs.core.merge_with, cljs.core._PLUS_).call(null, cljs.core._deref.call(null, summary12113), (new cljs.core.Keyword(null, "report-counters", "report-counters", -1702609242)).cljs$core$IFn$_invoke$arity$1(cljs.test.get_and_clear_env_BANG_.call(null))));
+        return cljs.core._vreset_BANG_.call(null, summary12434, cljs.core.partial.call(null, cljs.core.merge_with, cljs.core._PLUS_).call(null, cljs.core._deref.call(null, summary12434), (new cljs.core.Keyword(null, "report-counters", "report-counters", -1702609242)).cljs$core$IFn$_invoke$arity$1(cljs.test.get_and_clear_env_BANG_.call(null))));
       };
-    }(env12112, summary12113)], null)), cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
+    }(env12433, summary12434)], null)), cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12433, summary12434) {
       return function() {
-        cljs.test.set_env_BANG_.call(null, env12112);
+        cljs.test.set_env_BANG_.call(null, env12433);
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Symbol(null, "base-raiders.subs-test", "base-raiders.subs-test", 2114623316, null), new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "begin-test-ns", "begin-test-ns", -1701237033)], null));
         return cljs.test.block.call(null, function() {
           var env__10567__auto__ = cljs.test.get_current_env.call(null);
-          return cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12112, summary12113) {
+          return cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12433, summary12434) {
             return function() {
               if (env__10567__auto__ == null) {
                 cljs.test.set_env_BANG_.call(null, cljs.test.empty_env.call(null));
@@ -63802,11 +63800,11 @@ test_runner.runner = function test_runner$runner() {
               }
               return null;
             };
-          }(env__10567__auto__, env12112, summary12113)], null), cljs.test.test_vars_block.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Var(function() {
+          }(env__10567__auto__, env12433, summary12434)], null), cljs.test.test_vars_block.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Var(function() {
             return base_raiders.subs_test.subscription_handlers;
           }, new cljs.core.Symbol("base-raiders.subs-test", "subscription-handlers", "base-raiders.subs-test/subscription-handlers", 1546135459, null), cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Keyword(null, "name", "name", 1843675177), new cljs.core.Keyword(null, "file", "file", -1269645878), new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), new cljs.core.Keyword(null, "column", "column", 2078222095), new cljs.core.Keyword(null, 
           "line", "line", 212345235), new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), new cljs.core.Keyword(null, "arglists", "arglists", 1661989754), new cljs.core.Keyword(null, "doc", "doc", 1913296891), new cljs.core.Keyword(null, "test", "test", 577538877)], [new cljs.core.Symbol(null, "base-raiders.subs-test", "base-raiders.subs-test", 2114623316, null), new cljs.core.Symbol(null, "subscription-handlers", "subscription-handlers", 1691490753, null), "/Users/mrobb/Dev/clojure/base-raiders/test/cljs/base_raiders/subs_test.cljs", 
-          31, 10, 7, 7, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.subs_test.subscription_handlers) ? base_raiders.subs_test.subscription_handlers.cljs$lang$test : null]))], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12112, summary12113) {
+          31, 10, 7, 7, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.subs_test.subscription_handlers) ? base_raiders.subs_test.subscription_handlers.cljs$lang$test : null]))], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12433, summary12434) {
             return function() {
               if (env__10567__auto__ == null) {
                 return cljs.test.clear_env_BANG_.call(null);
@@ -63814,24 +63812,24 @@ test_runner.runner = function test_runner$runner() {
                 return null;
               }
             };
-          }(env__10567__auto__, env12112, summary12113)], null));
+          }(env__10567__auto__, env12433, summary12434)], null));
         }());
       };
-    }(env12112, summary12113), function(env12112, summary12113) {
+    }(env12433, summary12434), function(env12433, summary12434) {
       return function() {
         return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Symbol(null, "base-raiders.subs-test", "base-raiders.subs-test", 2114623316, null), new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "end-test-ns", "end-test-ns", 1620675645)], null));
       };
-    }(env12112, summary12113)], null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
+    }(env12433, summary12434)], null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12433, summary12434) {
       return function() {
-        return cljs.core._vreset_BANG_.call(null, summary12113, cljs.core.partial.call(null, cljs.core.merge_with, cljs.core._PLUS_).call(null, cljs.core._deref.call(null, summary12113), (new cljs.core.Keyword(null, "report-counters", "report-counters", -1702609242)).cljs$core$IFn$_invoke$arity$1(cljs.test.get_and_clear_env_BANG_.call(null))));
+        return cljs.core._vreset_BANG_.call(null, summary12434, cljs.core.partial.call(null, cljs.core.merge_with, cljs.core._PLUS_).call(null, cljs.core._deref.call(null, summary12434), (new cljs.core.Keyword(null, "report-counters", "report-counters", -1702609242)).cljs$core$IFn$_invoke$arity$1(cljs.test.get_and_clear_env_BANG_.call(null))));
       };
-    }(env12112, summary12113)], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
+    }(env12433, summary12434)], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12433, summary12434) {
       return function() {
-        cljs.test.set_env_BANG_.call(null, env12112);
-        cljs.test.do_report.call(null, cljs.core.deref.call(null, summary12113));
+        cljs.test.set_env_BANG_.call(null, env12433);
+        cljs.test.do_report.call(null, cljs.core.deref.call(null, summary12434));
         return cljs.test.clear_env_BANG_.call(null);
       };
-    }(env12112, summary12113)], null));
+    }(env12433, summary12434)], null));
   }());
 };
 goog.provide("goog.labs.userAgent.browser");

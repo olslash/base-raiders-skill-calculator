@@ -85,19 +85,18 @@
 (defn game-cost-of-board [graph costs selected]
   "the total cost of the currently selected skills"
   (let [nodes-cost (reduce + (map #(%1 costs) selected))
-        paths-cost ((fn []
-                      (loop [unconnected-nodes selected
-                             sum 0]
-                        (if (empty? unconnected-nodes)
-                          sum
-                        (let [to-connect (first unconnected-nodes)
-                              cheapest-path (path-to-cheapest-node graph (remove
-                                                                           (partial = to-connect)
-                                                                           selected) to-connect)
-                              connected (last cheapest-path)
-                              cost (cost-of-path-movement graph cheapest-path)]
-                          (recur (remove #(or (= %1 connected)
-                                              (= %1 to-connect))
-                                         unconnected-nodes)
-                                 (+ cost sum)))))))]
+        paths-cost (loop [unconnected-nodes selected
+                          sum 0]
+                     (if (empty? unconnected-nodes)
+                       sum
+                       (let [to-connect (first unconnected-nodes)
+                             cheapest-path (path-to-cheapest-node graph (remove
+                                                                          (partial = to-connect)
+                                                                          selected) to-connect)
+                             connected (last cheapest-path)
+                             cost (cost-of-path-movement graph cheapest-path)]
+                         (recur (remove #(or (= %1 connected)
+                                             (= %1 to-connect))
+                                        unconnected-nodes)
+                                (+ cost sum)))))]
     (+ nodes-cost paths-cost)))
