@@ -69,10 +69,35 @@
     (or cheapest-path
         [node])))        ; node itself if no other paths
 
+#_(defn cheapest-path-cost [graph selected node]
+  "the cost of the cheapest path between two nodes -> number"
+  (cost-of-path-movement graph
+                         (path-to-cheapest-node graph selected node)))
 
-(defn game-cost-of-selection [graph costs selected node]
+
+#_(defn game-cost-to-make-selection [graph costs selected node]
   "cost of selecting -node- given [selected] other nodes -> number"
   (let [path-to-cheapest (path-to-cheapest-node graph selected node)
         skill-cost ((last path-to-cheapest) costs)
         path-cost (cost-of-path-movement graph path-to-cheapest)]
     (+ skill-cost path-cost)))
+
+(defn game-cost-of-board [graph costs selected]
+  "the total cost of the currently selected skills"
+  (let [nodes-cost (reduce + (map #(%1 costs) selected))
+        paths-cost ((fn []
+                      (loop [unconnected-nodes selected
+                             sum 0]
+                        (if (empty? unconnected-nodes)
+                          sum
+                        (let [to-connect (first unconnected-nodes)
+                              cheapest-path (path-to-cheapest-node graph (remove
+                                                                           (partial = to-connect)
+                                                                           selected) to-connect)
+                              connected (last cheapest-path)
+                              cost (cost-of-path-movement graph cheapest-path)]
+                          (recur (remove #(or (= %1 connected)
+                                              (= %1 to-connect))
+                                         unconnected-nodes)
+                                 (+ cost sum)))))))]
+    (+ nodes-cost paths-cost)))
