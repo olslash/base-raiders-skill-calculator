@@ -63667,8 +63667,66 @@ goog.labs.userAgent.util.extractVersionTuples = function(userAgent) {
   }
   return data;
 };
+goog.provide("base_raiders.subs");
+goog.require("cljs.core");
+goog.require("re_frame.core");
+re_frame.core.register_sub.call(null, new cljs.core.Keyword(null, "name", "name", 1843675177), function(db) {
+  return reagent.ratom.make_reaction.call(null, function() {
+    return(new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null, db));
+  });
+});
+re_frame.core.register_sub.call(null, new cljs.core.Keyword(null, "active-panel", "active-panel", -1802545994), function(db, _) {
+  return reagent.ratom.make_reaction.call(null, function() {
+    return(new cljs.core.Keyword(null, "active-panel", "active-panel", -1802545994)).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null, db));
+  });
+});
+base_raiders.subs.current_score_sub = function base_raiders$subs$current_score_sub(db) {
+  var selected = cljs.core.get_in.call(null, cljs.core.deref.call(null, db), new cljs.core.Keyword(null, "selected", "selected", 574897764));
+  return null;
+};
+re_frame.core.register_sub.call(null, new cljs.core.Keyword(null, "current-score", "current-score", 1470735494), function(db, _) {
+  return reagent.ratom.make_reaction.call(null, function() {
+    return base_raiders.subs.current_score_sub.call(null, cljs.core.deref.call(null, db));
+  });
+});
+goog.provide("base_raiders.subs_test");
+goog.require("cljs.core");
+goog.require("base_raiders.subs");
+goog.require("cljs.test");
+base_raiders.subs_test.subscription_handlers = function base_raiders$subs_test$subscription_handlers() {
+  return cljs.test.test_var.call(null, base_raiders$subs_test$subscription_handlers.cljs$lang$var);
+};
+base_raiders.subs_test.subscription_handlers.cljs$lang$test = function() {
+  cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "current-score-sub");
+  var ret__10458__auto__ = function() {
+    try {
+      var values__10400__auto__ = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 1), 1);
+      var result__10401__auto__ = cljs.core.apply.call(null, cljs.core._EQ_, values__10400__auto__);
+      if (cljs.core.truth_(result__10401__auto__)) {
+        cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), 1, 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10400__auto__), new cljs.core.Keyword(null, "message", 
+        "message", -406056002), "does something"], null));
+      } else {
+        cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), 1, 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, 
+        new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10400__auto__)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "does something"], null));
+      }
+      return result__10401__auto__;
+    } catch (e41267) {
+      var t__10438__auto__ = e41267;
+      return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), 1, 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10438__auto__, new cljs.core.Keyword(null, "message", "message", -406056002), "does something"], 
+      null));
+    }
+  }();
+  cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.rest);
+  return ret__10458__auto__;
+};
+base_raiders.subs_test.subscription_handlers.cljs$lang$var = new cljs.core.Var(function() {
+  return base_raiders.subs_test.subscription_handlers;
+}, new cljs.core.Symbol("base-raiders.subs-test", "subscription-handlers", "base-raiders.subs-test/subscription-handlers", 1546135459, null), cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Keyword(null, "name", "name", 1843675177), new cljs.core.Keyword(null, "file", "file", -1269645878), new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), new cljs.core.Keyword(null, "column", "column", 2078222095), new cljs.core.Keyword(null, 
+"line", "line", 212345235), new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), new cljs.core.Keyword(null, "arglists", "arglists", 1661989754), new cljs.core.Keyword(null, "doc", "doc", 1913296891), new cljs.core.Keyword(null, "test", "test", 577538877)], [new cljs.core.Symbol(null, "base-raiders.subs-test", "base-raiders.subs-test", 2114623316, null), new cljs.core.Symbol(null, "subscription-handlers", "subscription-handlers", 1691490753, null), "/Users/mrobb/Dev/clojure/base-raiders/test/cljs/base_raiders/subs-test.cljs", 
+31, 10, 7, 7, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.subs_test.subscription_handlers) ? base_raiders.subs_test.subscription_handlers.cljs$lang$test : null]));
 goog.provide("test_runner");
 goog.require("cljs.core");
+goog.require("base_raiders.subs_test");
 goog.require("base_raiders.graph_test");
 goog.require("cljs.test");
 cljs.core.enable_console_print_BANG_.call(null);
@@ -63679,15 +63737,15 @@ cljs.core._add_method.call(null, cljs.test.report, new cljs.core.PersistentVecto
 });
 test_runner.runner = function test_runner$runner() {
   return cljs.test.run_block.call(null, function() {
-    var env12105 = cljs.test.empty_env.call(null, new cljs.core.Keyword("cljs.test", "default", "cljs.test/default", -1581405322));
-    var summary12106 = cljs.core.volatile_BANG_.call(null, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "summary", "summary", 380847952), new cljs.core.Keyword(null, "fail", "fail", 1706214930), 0, new cljs.core.Keyword(null, "error", "error", -978969032), 0, new cljs.core.Keyword(null, "pass", "pass", 1574159993), 0, new cljs.core.Keyword(null, "test", "test", 577538877), 0], null));
-    return cljs.core.concat.call(null, cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12105, summary12106) {
+    var env12112 = cljs.test.empty_env.call(null, new cljs.core.Keyword("cljs.test", "default", "cljs.test/default", -1581405322));
+    var summary12113 = cljs.core.volatile_BANG_.call(null, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "summary", "summary", 380847952), new cljs.core.Keyword(null, "fail", "fail", 1706214930), 0, new cljs.core.Keyword(null, "error", "error", -978969032), 0, new cljs.core.Keyword(null, "pass", "pass", 1574159993), 0, new cljs.core.Keyword(null, "test", "test", 577538877), 0], null));
+    return cljs.core.concat.call(null, cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
       return function() {
-        cljs.test.set_env_BANG_.call(null, env12105);
+        cljs.test.set_env_BANG_.call(null, env12112);
         cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Symbol(null, "base-raiders.graph-test", "base-raiders.graph-test", 1053591480, null), new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "begin-test-ns", "begin-test-ns", -1701237033)], null));
         return cljs.test.block.call(null, function() {
           var env__10567__auto__ = cljs.test.get_current_env.call(null);
-          return cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12105, summary12106) {
+          return cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12112, summary12113) {
             return function() {
               if (env__10567__auto__ == null) {
                 cljs.test.set_env_BANG_.call(null, cljs.test.empty_env.call(null));
@@ -63695,7 +63753,7 @@ test_runner.runner = function test_runner$runner() {
               }
               return null;
             };
-          }(env__10567__auto__, env12105, summary12106)], null), cljs.test.test_vars_block.call(null, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Var(function() {
+          }(env__10567__auto__, env12112, summary12113)], null), cljs.test.test_vars_block.call(null, new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Var(function() {
             return base_raiders.graph_test.skills;
           }, new cljs.core.Symbol("base-raiders.graph-test", "skills", "base-raiders.graph-test/skills", 1928316922, null), cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Keyword(null, "name", "name", 1843675177), new cljs.core.Keyword(null, "file", "file", -1269645878), new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), new cljs.core.Keyword(null, "column", "column", 2078222095), new cljs.core.Keyword(null, "line", "line", 
           212345235), new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), new cljs.core.Keyword(null, "arglists", "arglists", 1661989754), new cljs.core.Keyword(null, "doc", "doc", 1913296891), new cljs.core.Keyword(null, "test", "test", 577538877)], [new cljs.core.Symbol(null, "base-raiders.graph-test", "base-raiders.graph-test", 1053591480, null), new cljs.core.Symbol(null, "skills", "skills", -1695734343, null), "/Users/mrobb/Dev/clojure/base-raiders/test/cljs/base_raiders/graph_test.cljs", 
@@ -63711,7 +63769,7 @@ test_runner.runner = function test_runner$runner() {
             return base_raiders.graph_test.graph_search;
           }, new cljs.core.Symbol("base-raiders.graph-test", "graph-search", "base-raiders.graph-test/graph-search", 2132041664, null), cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Keyword(null, "name", "name", 1843675177), new cljs.core.Keyword(null, "file", "file", -1269645878), new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), new cljs.core.Keyword(null, "column", "column", 2078222095), new cljs.core.Keyword(null, 
           "line", "line", 212345235), new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), new cljs.core.Keyword(null, "arglists", "arglists", 1661989754), new cljs.core.Keyword(null, "doc", "doc", 1913296891), new cljs.core.Keyword(null, "test", "test", 577538877)], [new cljs.core.Symbol(null, "base-raiders.graph-test", "base-raiders.graph-test", 1053591480, null), new cljs.core.Symbol(null, "graph-search", "graph-search", -954828413, null), "/Users/mrobb/Dev/clojure/base-raiders/test/cljs/base_raiders/graph_test.cljs", 
-          22, 10, 48, 48, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.graph_test.graph_search) ? base_raiders.graph_test.graph_search.cljs$lang$test : null]))], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12105, summary12106) {
+          22, 10, 48, 48, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.graph_test.graph_search) ? base_raiders.graph_test.graph_search.cljs$lang$test : null]))], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12112, summary12113) {
             return function() {
               if (env__10567__auto__ == null) {
                 return cljs.test.clear_env_BANG_.call(null);
@@ -63719,24 +63777,61 @@ test_runner.runner = function test_runner$runner() {
                 return null;
               }
             };
-          }(env__10567__auto__, env12105, summary12106)], null));
+          }(env__10567__auto__, env12112, summary12113)], null));
         }());
       };
-    }(env12105, summary12106), function(env12105, summary12106) {
+    }(env12112, summary12113), function(env12112, summary12113) {
       return function() {
         return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Symbol(null, "base-raiders.graph-test", "base-raiders.graph-test", 1053591480, null), new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "end-test-ns", "end-test-ns", 1620675645)], null));
       };
-    }(env12105, summary12106)], null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12105, summary12106) {
+    }(env12112, summary12113)], null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
       return function() {
-        return cljs.core._vreset_BANG_.call(null, summary12106, cljs.core.partial.call(null, cljs.core.merge_with, cljs.core._PLUS_).call(null, cljs.core._deref.call(null, summary12106), (new cljs.core.Keyword(null, "report-counters", "report-counters", -1702609242)).cljs$core$IFn$_invoke$arity$1(cljs.test.get_and_clear_env_BANG_.call(null))));
+        return cljs.core._vreset_BANG_.call(null, summary12113, cljs.core.partial.call(null, cljs.core.merge_with, cljs.core._PLUS_).call(null, cljs.core._deref.call(null, summary12113), (new cljs.core.Keyword(null, "report-counters", "report-counters", -1702609242)).cljs$core$IFn$_invoke$arity$1(cljs.test.get_and_clear_env_BANG_.call(null))));
       };
-    }(env12105, summary12106)], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12105, summary12106) {
+    }(env12112, summary12113)], null)), cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
       return function() {
-        cljs.test.set_env_BANG_.call(null, env12105);
-        cljs.test.do_report.call(null, cljs.core.deref.call(null, summary12106));
+        cljs.test.set_env_BANG_.call(null, env12112);
+        cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Symbol(null, "base-raiders.subs-test", "base-raiders.subs-test", 2114623316, null), new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "begin-test-ns", "begin-test-ns", -1701237033)], null));
+        return cljs.test.block.call(null, function() {
+          var env__10567__auto__ = cljs.test.get_current_env.call(null);
+          return cljs.core.concat.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12112, summary12113) {
+            return function() {
+              if (env__10567__auto__ == null) {
+                cljs.test.set_env_BANG_.call(null, cljs.test.empty_env.call(null));
+              } else {
+              }
+              return null;
+            };
+          }(env__10567__auto__, env12112, summary12113)], null), cljs.test.test_vars_block.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Var(function() {
+            return base_raiders.subs_test.subscription_handlers;
+          }, new cljs.core.Symbol("base-raiders.subs-test", "subscription-handlers", "base-raiders.subs-test/subscription-handlers", 1546135459, null), cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Keyword(null, "name", "name", 1843675177), new cljs.core.Keyword(null, "file", "file", -1269645878), new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), new cljs.core.Keyword(null, "column", "column", 2078222095), new cljs.core.Keyword(null, 
+          "line", "line", 212345235), new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), new cljs.core.Keyword(null, "arglists", "arglists", 1661989754), new cljs.core.Keyword(null, "doc", "doc", 1913296891), new cljs.core.Keyword(null, "test", "test", 577538877)], [new cljs.core.Symbol(null, "base-raiders.subs-test", "base-raiders.subs-test", 2114623316, null), new cljs.core.Symbol(null, "subscription-handlers", "subscription-handlers", 1691490753, null), "/Users/mrobb/Dev/clojure/base-raiders/test/cljs/base_raiders/subs_test.cljs", 
+          31, 10, 7, 7, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.subs_test.subscription_handlers) ? base_raiders.subs_test.subscription_handlers.cljs$lang$test : null]))], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env__10567__auto__, env12112, summary12113) {
+            return function() {
+              if (env__10567__auto__ == null) {
+                return cljs.test.clear_env_BANG_.call(null);
+              } else {
+                return null;
+              }
+            };
+          }(env__10567__auto__, env12112, summary12113)], null));
+        }());
+      };
+    }(env12112, summary12113), function(env12112, summary12113) {
+      return function() {
+        return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Symbol(null, "base-raiders.subs-test", "base-raiders.subs-test", 2114623316, null), new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "end-test-ns", "end-test-ns", 1620675645)], null));
+      };
+    }(env12112, summary12113)], null), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
+      return function() {
+        return cljs.core._vreset_BANG_.call(null, summary12113, cljs.core.partial.call(null, cljs.core.merge_with, cljs.core._PLUS_).call(null, cljs.core._deref.call(null, summary12113), (new cljs.core.Keyword(null, "report-counters", "report-counters", -1702609242)).cljs$core$IFn$_invoke$arity$1(cljs.test.get_and_clear_env_BANG_.call(null))));
+      };
+    }(env12112, summary12113)], null)), new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [function(env12112, summary12113) {
+      return function() {
+        cljs.test.set_env_BANG_.call(null, env12112);
+        cljs.test.do_report.call(null, cljs.core.deref.call(null, summary12113));
         return cljs.test.clear_env_BANG_.call(null);
       };
-    }(env12105, summary12106)], null));
+    }(env12112, summary12113)], null));
   }());
 };
 goog.provide("goog.labs.userAgent.browser");
@@ -67580,28 +67675,6 @@ secretary.core.render_route["string"] = function() {
   G__29505.cljs$core$IFn$_invoke$arity$2 = G__29505__2;
   return G__29505;
 }();
-goog.provide("base_raiders.subs");
-goog.require("cljs.core");
-goog.require("re_frame.core");
-re_frame.core.register_sub.call(null, new cljs.core.Keyword(null, "name", "name", 1843675177), function(db) {
-  return reagent.ratom.make_reaction.call(null, function() {
-    return(new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null, db));
-  });
-});
-re_frame.core.register_sub.call(null, new cljs.core.Keyword(null, "active-panel", "active-panel", -1802545994), function(db, _) {
-  return reagent.ratom.make_reaction.call(null, function() {
-    return(new cljs.core.Keyword(null, "active-panel", "active-panel", -1802545994)).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null, db));
-  });
-});
-base_raiders.subs.current_score_sub = function base_raiders$subs$current_score_sub(db) {
-  var selected = cljs.core.get_in.call(null, cljs.core.deref.call(null, db), new cljs.core.Keyword(null, "selected", "selected", 574897764));
-  return null;
-};
-re_frame.core.register_sub.call(null, new cljs.core.Keyword(null, "current-score", "current-score", 1470735494), function(db, _) {
-  return reagent.ratom.make_reaction.call(null, function() {
-    return base_raiders.subs.current_score_sub.call(null, cljs.core.deref.call(null, db));
-  });
-});
 goog.provide("base_raiders.routes");
 goog.require("cljs.core");
 goog.require("re_frame.core");
@@ -67671,38 +67744,3 @@ base_raiders.core.init = function base_raiders$core$init() {
   return base_raiders.core.mount_root.call(null);
 };
 goog.exportSymbol("base_raiders.core.init", base_raiders.core.init);
-goog.provide("base_raiders.subs_test");
-goog.require("cljs.core");
-goog.require("base_raiders.subs");
-goog.require("cljs.test");
-base_raiders.subs_test.subscription_handlers = function base_raiders$subs_test$subscription_handlers() {
-  return cljs.test.test_var.call(null, base_raiders$subs_test$subscription_handlers.cljs$lang$var);
-};
-base_raiders.subs_test.subscription_handlers.cljs$lang$test = function() {
-  cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.conj, "current-score-sub");
-  var ret__10458__auto__ = function() {
-    try {
-      var values__10400__auto__ = cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, 1), 1);
-      var result__10401__auto__ = cljs.core.apply.call(null, cljs.core._EQ_, values__10400__auto__);
-      if (cljs.core.truth_(result__10401__auto__)) {
-        cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "pass", "pass", 1574159993), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), 1, 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core.cons.call(null, cljs.core._EQ_, values__10400__auto__), new cljs.core.Keyword(null, "message", 
-        "message", -406056002), "does something"], null));
-      } else {
-        cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "fail", "fail", 1706214930), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), 1, 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), cljs.core._conj.call(null, cljs.core._conj.call(null, cljs.core.List.EMPTY, cljs.core.cons.call(null, 
-        new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), values__10400__auto__)), new cljs.core.Symbol(null, "not", "not", 1044554643, null)), new cljs.core.Keyword(null, "message", "message", -406056002), "does something"], null));
-      }
-      return result__10401__auto__;
-    } catch (e41267) {
-      var t__10438__auto__ = e41267;
-      return cljs.test.do_report.call(null, new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "type", "type", 1174270348), new cljs.core.Keyword(null, "error", "error", -978969032), new cljs.core.Keyword(null, "expected", "expected", 1583670997), cljs.core.list(new cljs.core.Symbol(null, "\x3d", "\x3d", -1501502141, null), 1, 1), new cljs.core.Keyword(null, "actual", "actual", 107306363), t__10438__auto__, new cljs.core.Keyword(null, "message", "message", -406056002), "does something"], 
-      null));
-    }
-  }();
-  cljs.test.update_current_env_BANG_.call(null, new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "testing-contexts", "testing-contexts", -1485646523)], null), cljs.core.rest);
-  return ret__10458__auto__;
-};
-base_raiders.subs_test.subscription_handlers.cljs$lang$var = new cljs.core.Var(function() {
-  return base_raiders.subs_test.subscription_handlers;
-}, new cljs.core.Symbol("base-raiders.subs-test", "subscription-handlers", "base-raiders.subs-test/subscription-handlers", 1546135459, null), cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null, "ns", "ns", 441598760), new cljs.core.Keyword(null, "name", "name", 1843675177), new cljs.core.Keyword(null, "file", "file", -1269645878), new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), new cljs.core.Keyword(null, "column", "column", 2078222095), new cljs.core.Keyword(null, 
-"line", "line", 212345235), new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), new cljs.core.Keyword(null, "arglists", "arglists", 1661989754), new cljs.core.Keyword(null, "doc", "doc", 1913296891), new cljs.core.Keyword(null, "test", "test", 577538877)], [new cljs.core.Symbol(null, "base-raiders.subs-test", "base-raiders.subs-test", 2114623316, null), new cljs.core.Symbol(null, "subscription-handlers", "subscription-handlers", 1691490753, null), "/Users/mrobb/Dev/clojure/base-raiders/test/cljs/base_raiders/subs-test.cljs", 
-31, 10, 7, 7, cljs.core.List.EMPTY, null, cljs.core.truth_(base_raiders.subs_test.subscription_handlers) ? base_raiders.subs_test.subscription_handlers.cljs$lang$test : null]));

@@ -2,7 +2,7 @@
   (:require
    [cljs.test :as test :refer-macros [run-tests] :refer [report]]
    [base-raiders.graph-test]
-   #_[base-raiders.subs-test]))
+   [base-raiders.subs-test]))
 
 (enable-console-print!)
 
@@ -16,4 +16,4 @@
   (test/run-tests
    (test/empty-env ::test/default)
    'base-raiders.graph-test
-   #_'base-raiders.subs-test))
+   'base-raiders.subs-test))
