@@ -167,4 +167,4 @@
         "unconnected skills")
     (is (= (g/game-cost-of-board skills skill-costs [:parry :resist-damage :move])
            12)
-        "one skill selected")))
+        "3 skills selected")))

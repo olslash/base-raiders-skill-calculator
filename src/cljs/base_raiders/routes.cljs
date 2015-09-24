@@ -15,6 +15,7 @@
     (.setEnabled true)))
 
 (defn app-routes []
+  (print "routing")
   (secretary/set-config! :prefix "#")
   ;; --------------------
   ;; define routes here
@@ -24,6 +25,8 @@
   (defroute "/about" []
     (re-frame/dispatch [:set-active-panel :about-panel]))
 
+  (defroute "/test" []
+            (re-frame/dispatch [:set-active-panel :test-panel]))
 
   ;; --------------------
   (hook-browser-navigation!))

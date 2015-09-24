@@ -45,4 +45,4 @@
   {:name        "Base Raiders Skills"
    :skills      skills
    :skill-costs skill-costs
-   :selected    []})
+   :selected    [:notice]})
