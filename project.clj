@@ -4,7 +4,8 @@
                  [reagent "0.5.0"]
                  [re-frame "0.4.1"]
                  [secretary "1.2.3"]
-                 [aysylu/loom "0.5.4"]]
+                 [aysylu/loom "0.5.4"]
+                 [figwheel-sidecar "0.4.0"]]
 
   :source-paths ["src/clj"]
 
