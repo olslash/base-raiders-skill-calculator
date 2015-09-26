@@ -1,6 +1,8 @@
 (ns base-raiders.views
-    (:require [re-frame.core :as re-frame :refer [subscribe dispatch]]
-              [base-raiders.db :as db]))
+    (:require
+      [clojure.string :refer [join]]
+      [re-frame.core :as re-frame :refer [subscribe dispatch]]
+      [base-raiders.db :as db]))
 
 ;; --------------------
 (defn home-panel []
@@ -47,15 +49,23 @@
 
 
 
-(defn node [{:keys [height width x y]}]
-  [:g {:style (:node styles)}
-   [:rect {:height height
-           :width  width
-           :x      x
-           :y      y}]
-   #_[:g {:style (:label styles)}
-    [:text
-     [:tspan {:dy "1em" :x "1"} "this is the text"] ]]])
+(defn node [pos-x pos-y]
+  (let [scale 10
+        shape (map (fn [[x y]]
+                     [(-> x
+                          (* scale)
+                          (+ pos-x))
+                      (-> y
+                          (* scale)
+                          (+ pos-y))])
+                   [[0 1] [1 2] [5 2] [6 1] [5 0] [1 0]])]
+    [:g {:style (:node styles)}
+     [:polygon {:points (join " " (map #(join "," %) shape))}]
+
+     #_[:g {:style (:label styles)}
+        [:text
+         [:tspan {:dy "1em" :x "1"} "this is the text"]]]
+     ]))
 
 (defn edge [{:keys [x1 x2 y1 y2]}]
   [:g {:style (:edge styles)}
@@ -67,21 +77,20 @@
 
 
 (defn grid [node-positions graph]
-  (into [:svg {:height 1000
-               :width 1000}]
+  (let [scale 100]
+    (into [:svg {:height 1000
+                 :width  1000}]
 
-        [(for [[_ [x y]] node-positions]                    ; nodes
-           (node {:height 10
-                  :width  10
-                  :x      (* x 50)
-                  :y      (* y 50)}))
-         (for [[node neighbors] graph]
-           (let [adjacent-nodes (keys neighbors)]
-             (into [:g] (map #(edge {:x1 (* 50 (first (node node-positions)))
-                                     :y1 (* 50 (second (node node-positions)))
-                                     :x2 (* 50 (first (% node-positions)))
-                                     :y2 (* 50 (second (% node-positions)))})
-                             adjacent-nodes))))]))
+          [(for [[_ [x y]] node-positions]                  ; nodes
+             (node (* x scale) (* y scale)))
+
+           (for [[node neighbors] graph]                    ; edges
+             (let [adjacent-nodes (keys neighbors)]
+               (into [:g] (map #(edge {:x1 (* scale (first (node node-positions)))
+                                       :y1 (* scale (second (node node-positions)))
+                                       :x2 (* scale (first (% node-positions)))
+                                       :y2 (* scale (second (% node-positions)))})
+                               adjacent-nodes))))])))
 
 
 (defn test-panel []
