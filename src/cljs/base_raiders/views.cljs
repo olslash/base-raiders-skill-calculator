@@ -49,15 +49,15 @@
 
 
 
-(defn node [pos-x pos-y]
+(defn node [{:keys [x y]}]
   (let [scale 10
-        shape (map (fn [[x y]]
-                     [(-> x
+        shape (map (fn [[pt-x pt-y]]
+                     [(-> pt-x
                           (* scale)
-                          (+ pos-x))
-                      (-> y
+                          (+ x))
+                      (-> pt-y
                           (* scale)
-                          (+ pos-y))])
+                          (+ y))])
                    [[0 1] [1 2] [5 2] [6 1] [5 0] [1 0]])]
     [:g {:style (:node styles)}
      [:polygon {:points (join " " (map #(join "," %) shape))}]
@@ -81,16 +81,16 @@
     (into [:svg {:height 1000
                  :width  1000}]
 
-          [(for [[_ [x y]] node-positions]                  ; nodes
-             (node (* x scale) (* y scale)))
-
-           (for [[node neighbors] graph]                    ; edges
+          [(for [[node neighbors] graph]                    ; edges
              (let [adjacent-nodes (keys neighbors)]
-               (into [:g] (map #(edge {:x1 (* scale (first (node node-positions)))
-                                       :y1 (* scale (second (node node-positions)))
-                                       :x2 (* scale (first (% node-positions)))
-                                       :y2 (* scale (second (% node-positions)))})
-                               adjacent-nodes))))])))
+               (for [neighbor adjacent-nodes]
+                 ^{:key (str node neighbor)} [edge {:x1 (* scale (first (node node-positions)))
+                                                    :y1 (* scale (second (node node-positions)))
+                                                    :x2 (* scale (first (neighbor node-positions)))
+                                                    :y2 (* scale (second (neighbor node-positions)))}])))
+           (for [[_ [x y]] node-positions]                  ; nodes
+             ^{:key (str x y)} [node {:x (* x scale)
+                                      :y (* y scale)}])])))
 
 
 (defn test-panel []
