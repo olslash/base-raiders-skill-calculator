@@ -50,12 +50,16 @@
 (defn compare-paths [graph path1 path2]
   "compare two paths by movement cost"
   (let [cost1 (cost-of-path-movement graph path1)
-        cost2 (cost-of-path-movement graph path2)]
+        cost2 (cost-of-path-movement graph path2)
+        cost-comparison (compare cost1 cost2)
+        length-comparison (compare (count path1) (count path2))]
     (cond
       ;nils float right
       (nil? path1) 1
       (nil? path2) -1
-      :else (compare cost1 cost2))))
+      :else (if (= 0 cost-comparison)                       ; same costs, use shorter path
+              length-comparison
+              cost-comparison))))
 
 (defn cheapest-path [graph from to]
   "the cheapest path between from and to -> [:a :b :c]"

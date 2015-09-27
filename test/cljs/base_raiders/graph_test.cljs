@@ -124,7 +124,10 @@
         "finds the path to the cheapest node - 2")
     (is (= (g/path-to-cheapest-node skills [:stress-cap :dexterity] :move)
            [:move :stealth :dexterity])
-        "finds the path to the cheapest node - 3"))
+        "finds the path to the cheapest node - 3")
+    (is (= (g/path-to-cheapest-node skills [:resist-damage] :climb)
+           [:climb :physical-force :stress-cap :resist-damage])
+        "selects the shorter path if two different-length paths have the same score"))
 
   #_(testing "cheapest-path-cost"
     (is (= (g/cheapest-path-cost skills [:physical-force] :move)
