@@ -170,4 +170,18 @@
         "unconnected skills")
     (is (= (g/game-cost-of-board skills skill-costs [:parry :resist-damage :move])
            12)
-        "3 skills selected")))
+        "3 skills selected"))
+
+  (testing "selected-edges"
+    (is (let [selected-edges (set (g/selected-edges skills [:leap :move]))]
+          (and (contains? selected-edges [:leap :move])
+               (contains? selected-edges [:move :leap])))
+        "has both path directions")
+    (is (let [selected-edges (set (g/selected-edges skills [:resist-damage :climb]))]
+          (and (contains? selected-edges [:resist-damage :stress-cap])
+               (contains? selected-edges [:stress-cap :physical-force])
+               (contains? selected-edges [:physical-force :climb])
+               (contains? selected-edges [:climb :physical-force])
+               (contains? selected-edges [:physical-force :stress-cap])
+               (contains? selected-edges [:stress-cap :resist-damage])))
+        "has all pairs in a path")))

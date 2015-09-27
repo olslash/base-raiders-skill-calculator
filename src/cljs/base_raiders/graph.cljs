@@ -104,3 +104,11 @@
                                         unconnected-nodes)
                                 (+ cost sum)))))]
     (+ nodes-cost paths-cost)))
+
+(defn selected-edges [graph selected]
+  "returns pairs of [from to] for all the edges between selected nodes in the graph"
+  (let [paths (map (fn [node]
+                     (path-to-cheapest-node graph (remove #(= node %) selected) node))
+                   selected)
+        pairs (mapcat #(partition 2 1 %) paths)]
+    pairs))
