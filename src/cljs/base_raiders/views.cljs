@@ -31,7 +31,7 @@
                      :init-mental    [1 1]
                      :init-social    [2 1]
                      :resist-damage  [0 0]
-                     :stress-cap     [0 1]
+                     :stress-cap-h   [0 1]
                      :physical-force [0 2]
                      :leap           [1 2]
                      :climb          [0 3]
@@ -49,54 +49,62 @@
 
 
 
-(defn node [{:keys [x y]}]
-  (let [scale 10
+(defn node [{:keys [x y text]}]
+  (let [node-scale 20
+        text-x-offset 60
+        text-y-offset 10
         shape (map (fn [[pt-x pt-y]]
                      [(-> pt-x
-                          (* scale)
+                          (* node-scale)
                           (+ x))
                       (-> pt-y
-                          (* scale)
+                          (* node-scale)
                           (+ y))])
                    [[0 1] [1 2] [5 2] [6 1] [5 0] [1 0]])]
     [:g {:style (:node styles)}
      [:polygon {:points (join " " (map #(join "," %) shape))}]
 
-     #_[:g {:style (:label styles)}
-        [:text
-         [:tspan {:dy "1em" :x "1"} "this is the text"]]]
-     ]))
+     [:g {:style (:label styles)}
+      [:text {:x (+ text-x-offset x) :y (+ text-y-offset y) :text-anchor "middle"}
+       [:tspan {:dy "1em"} text]]]]))
 
 (defn edge [{:keys [x1 x2 y1 y2]}]
-  [:g {:style (:edge styles)}
-   [:line {:x1 x1
-           :x2 x2
-           :y1 y1
-           :y2 y2}]])
+  (let [x-scale 60
+        y-scale 20]
+    [:g {:style (:edge styles)}
+     [:line {:x1 (+ x-scale x1)
+             :x2 (+ x-scale x2)
+             :y1 (+ y-scale y1)
+             :y2 (+ y-scale y2)}]]))
 
 
 
-(defn grid [node-positions graph]
-  (let [scale 100]
+(defn grid [node-positions graph skill-labels]
+  (let [x-scale 200
+        y-scale 100]
     (into [:svg {:height 1000
                  :width  1000}]
 
-          [(for [[node neighbors] graph]                    ; edges
-             (let [adjacent-nodes (keys neighbors)]
-               (for [neighbor adjacent-nodes]
-                 ^{:key (str node neighbor)} [edge {:x1 (* scale (first (node node-positions)))
-                                                    :y1 (* scale (second (node node-positions)))
-                                                    :x2 (* scale (first (neighbor node-positions)))
-                                                    :y2 (* scale (second (neighbor node-positions)))}])))
-           (for [[_ [x y]] node-positions]                  ; nodes
-             ^{:key (str x y)} [node {:x (* x scale)
-                                      :y (* y scale)}])])))
+          ; edges
+          [(for [[start-node neighbors] graph]
+             (let [connected-nodes (keys neighbors)]
+               (for [neighbor connected-nodes]
+                 ^{:key (str start-node neighbor)} [edge {:x1 (* x-scale (first (start-node node-positions)))
+                                                          :y1 (* y-scale (second (start-node node-positions)))
+                                                          :x2 (* x-scale (first (neighbor node-positions)))
+                                                          :y2 (* y-scale (second (neighbor node-positions)))}])))
+
+           ; nodes
+           (for [[skill [x y]] node-positions]
+             ^{:key (str x y)} [node {:x    (* x x-scale)
+                                      :y    (* y y-scale)
+                                      :text (skill skill-labels)}])])))
 
 
 (defn test-panel []
   (let [score (subscribe [:current-score])]
     (fn []
-      (grid node-positions db/skills)
+      (grid node-positions db/skills db/skill-labels)
 
 
       #_[:div "The score is" @score
