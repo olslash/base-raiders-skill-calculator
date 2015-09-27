@@ -17,11 +17,14 @@
      [:div [:a {:href "#/"} "go to Home Page"]]]))
 
 
-(def styles {:node  {:stroke       "#333"
+(def styles {:grid  {:margin "25px"}
+
+             :node  {:stroke       "#333"
                      :stroke-width "1px"
                      :fill         "#DDD"}
 
-             :label {:fill "#333"}
+             :label {:fill "#333"
+                     :font-family "sans-serif"}
 
              :edge  {:stroke       "#333"
                      :stroke-width "1px"}})
@@ -82,7 +85,8 @@
 (defn grid [node-positions graph skill-labels]
   (let [x-scale 200
         y-scale 100]
-    (into [:svg {:height 1000
+    (into [:svg {:style (:grid styles)
+                 :height 1000
                  :width  1000}]
 
           ; edges
