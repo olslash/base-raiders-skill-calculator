@@ -4,13 +4,13 @@
       [re-frame.core :as re-frame :refer [subscribe dispatch]]))
 
 ;; --------------------
-(defn home-panel []
+#_(defn home-panel []
   (let [name (subscribe [:name])]
     (fn []
       [:div (str "Hello from " @name ". This is the Home Page.")
        [:div [:a {:href "#/about"} "go to About Page"]]])))
 
-(defn about-panel []
+#_(defn about-panel []
   (fn []
     [:div "This is the About Page."
      [:div [:a {:href "#/"} "go to Home Page"]]]))
@@ -131,7 +131,7 @@
                                       :selected (skill (set selected-nodes))}])])))
 
 
-(defn test-panel []
+(defn home-panel []
   (let [skill-labels    (subscribe [:skill-labels])
         skill-graph     (subscribe [:skills])
         selected-skills (subscribe [:selected-skills])
@@ -147,8 +147,8 @@
 ;; --------------------
 (defmulti panels identity)
 (defmethod panels :home-panel [] [home-panel])
-(defmethod panels :about-panel [] [about-panel])
-(defmethod panels :test-panel [] [test-panel])
+;(defmethod panels :about-panel [] [about-panel])
+;(defmethod panels :test-panel [] [test-panel])
 (defmethod panels :default [] [:div])
 
 (defn main-panel []
