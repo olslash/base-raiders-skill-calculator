@@ -138,14 +138,9 @@
         selected-edges  (subscribe [:selected-edges])
         score           (subscribe [:current-score])]
     (fn []
-      [grid node-positions @skill-graph @skill-labels @selected-skills @selected-edges]
-
-
-      #_[:div "The score is" @score
-       [:svg {:height 1000 :width 1000}
-        [node {:height 100 :width 100 :x 10 :y 10}]]
-       [:div {:on-click #(do (print "onclick")
-                             (dispatch [:set-selected-skills [:shoot :move :leap]]))} "go to Home Page"]])))
+      [:div
+       [:div "The score is " @score]
+       [grid node-positions @skill-graph @skill-labels @selected-skills @selected-edges]])))
 
 
 

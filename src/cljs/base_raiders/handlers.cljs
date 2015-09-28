@@ -28,5 +28,5 @@
     (let [selected (:selected db)]
       (assoc db :selected
                 (if (contains? (set selected) skill)
-                  (vec (remove #(= skill %) selected))      ; remove
+                  (vec (remove #(= skill %) selected))           ; remove
                   (conj selected skill))))))                     ; add
