@@ -56,7 +56,35 @@
                      :strike         [2 5]
                      :security       [0 5]
                      :notice         [0 6]
-                     :shoot          [2 6]})
+                     :shoot          [2 6]
+                     :examine        [0 7]
+                     :information    [0 8]
+                     :research       [1 8]
+
+                     :languages      [2 7]
+                     :treat-scope    [2 8]
+                     :environment    [2 9]
+                     :transport      [2 10]
+
+                     :stress-cap-r   [3 8]
+                     :esteem         [3 9]
+                     :networking     [4 9]
+                     :wealth         [4 8]
+                     :influence      [5 9]
+                     :conversation   [4 10]
+                     :insight        [3 10]
+                     :convince       [4 11]
+                     :guile          [4 12]
+                     :disguise       [4 13]
+                     :inspire        [5 11]
+                     :menace         [5 10]
+                     :willpower      [5 12]
+                     :stress-cap-c   [5 13]
+
+                     :dismantle      [3 11]
+                     :repair         [3 12]
+                     :craft          [3 13]
+                     :workspace      [3 14]})
 
 
 
@@ -102,12 +130,12 @@
 
 
 
-(defn grid [node-positions graph node-labels selected-nodes selected-edges]
+(defn grid [{:keys [node-positions graph node-labels selected-skills selected-edges]}]
   (let [x-scale 200
         y-scale 100]
     (into [:svg {:style (:grid styles)
-                 :height 1000
-                 :width  1000}]
+                 :height 2000
+                 :width  1500}]
 
           ; edges
           [(for [[start-node neighbors] graph]
@@ -128,7 +156,7 @@
                                       :x        (* x x-scale)
                                       :y        (* y y-scale)
                                       :text     (skill node-labels)
-                                      :selected (skill (set selected-nodes))}])])))
+                                      :selected (skill (set selected-skills))}])])))
 
 
 (defn home-panel []
@@ -140,7 +168,11 @@
     (fn []
       [:div
        [:div "The score is " @score]
-       [grid node-positions @skill-graph @skill-labels @selected-skills @selected-edges]])))
+       [grid {:node-positions node-positions
+              :graph @skill-graph
+              :node-labels @skill-labels
+              :selected-skills @selected-skills
+              :selected-edges @selected-edges}]])))
 
 
 
