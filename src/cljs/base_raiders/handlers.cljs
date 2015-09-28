@@ -15,5 +15,4 @@
 (re-frame/register-handler
   :set-selected-skills
   (fn [db [_ skills]]
-    (print (str "handler" skills))
     (assoc db :selected skills)))

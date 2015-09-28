@@ -64,4 +64,4 @@
    :skills       skills
    :skill-costs  skill-costs
    :skill-labels skill-labels
-   :selected     []})
+   :selected     [:security :shoot :notice :leap :resist-damage :parry]})
