@@ -12,7 +12,21 @@
  (fn [db [_ active-panel]]
    (assoc db :active-panel active-panel)))
 
+#_(re-frame/register-handler
+  :select-skill
+  (fn [db [_ skill]]
+    (conj skill (:selected db))))
+
+#_(re-frame/register-handler
+  :deselect-skill
+  (fn [db [_ skill]]
+    (vec (remove #(= skill %) (:selected db)))))
+
 (re-frame/register-handler
-  :set-selected-skills
-  (fn [db [_ skills]]
-    (assoc db :selected skills)))
+  :toggle-skill
+  (fn [db [_ skill]]
+    (let [selected (:selected db)]
+      (assoc db :selected
+                (if (contains? (set selected) skill)
+                  (vec (remove #(= skill %) selected))      ; remove
+                  (conj selected skill))))))                     ; add

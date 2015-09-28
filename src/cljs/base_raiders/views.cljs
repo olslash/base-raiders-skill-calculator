@@ -62,7 +62,7 @@
 
 
 
-(defn node [{:keys [x y text selected]}]
+(defn node [{:keys [x y text selected on-click]}]
   (let [node-scale 20
         text-x-offset 60
         text-y-offset 10
@@ -74,7 +74,8 @@
                           (* node-scale)
                           (+ y))])
                    [[0 1] [1 2] [5 2] [6 1] [5 0] [1 0]])]
-    [:g {:style (if selected
+    [:g {:on-click on-click
+         :style (if selected
                   (merge (:node styles)
                          (:node-selected styles))
                   (:node styles))}
@@ -123,7 +124,8 @@
 
            ; nodes
            (for [[skill [x y]] node-positions]
-             ^{:key (str x y)} [node {:x        (* x x-scale)
+             ^{:key (str x y)} [node {:on-click #(dispatch [:toggle-skill skill])
+                                      :x        (* x x-scale)
                                       :y        (* y y-scale)
                                       :text     (skill node-labels)
                                       :selected (skill (set selected-nodes))}])])))
