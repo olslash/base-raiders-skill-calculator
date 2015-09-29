@@ -132,7 +132,8 @@
 
 (defn grid [{:keys [node-positions graph node-labels selected-skills selected-edges]}]
   (let [x-scale 200
-        y-scale 100]
+        y-scale 100
+        already-drawn-edges   (transient #{})]
     (into [:svg {:style (:grid styles)
                  :height 2000
                  :width  1500}]
@@ -141,14 +142,16 @@
           [(for [[start-node neighbors] graph]
              (let [connected-nodes (keys neighbors)]
                (for [neighbor connected-nodes]
-                 (let [cost (get-in graph [start-node neighbor])]
-                   ^{:key (str start-node neighbor)} [edge {:selected (or (contains? (set selected-edges) [start-node neighbor])
-                                                                          (contains? (set selected-edges) [neighbor start-node]))
-                                                            :cost     cost
-                                                            :x1       (* x-scale (first (start-node node-positions)))
-                                                            :y1       (* y-scale (second (start-node node-positions)))
-                                                            :x2       (* x-scale (first (neighbor node-positions)))
-                                                            :y2       (* y-scale (second (neighbor node-positions)))}]))))
+                 (when ((complement contains?) already-drawn-edges [neighbor start-node])
+                   (conj! already-drawn-edges [start-node neighbor])
+                   (let [cost (get-in graph [start-node neighbor])]
+                     ^{:key (str start-node neighbor)} [edge {:selected (or (contains? (set selected-edges) [start-node neighbor])
+                                                                            (contains? (set selected-edges) [neighbor start-node]))
+                                                              :cost     cost
+                                                              :x1       (* x-scale (first (start-node node-positions)))
+                                                              :y1       (* y-scale (second (start-node node-positions)))
+                                                              :x2       (* x-scale (first (neighbor node-positions)))
+                                                              :y2       (* y-scale (second (neighbor node-positions)))}])))))
 
            ; nodes
            (for [[skill [x y]] node-positions]
@@ -169,10 +172,10 @@
       [:div
        [:div "The score is " @score]
        [grid {:node-positions node-positions
-              :graph @skill-graph
-              :node-labels @skill-labels
+              :graph           @skill-graph
+              :node-labels     @skill-labels
               :selected-skills @selected-skills
-              :selected-edges @selected-edges}]])))
+              :selected-edges  @selected-edges}]])))
 
 
 

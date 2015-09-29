@@ -45,7 +45,8 @@
     (reaction
       (let [skills (get-in @db [:skills])
             selected-skills (get-in @db [:selected])]
-        (g/selected-edges skills selected-skills)))))
+        (g/filter-single-direction
+          (g/selected-edges skills selected-skills))))))
 
 (register-sub
   :current-score

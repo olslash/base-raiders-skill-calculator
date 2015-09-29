@@ -179,9 +179,15 @@
         "has both path directions")
     (is (let [selected-edges (set (g/selected-edges skills [:resist-damage :climb]))]
           (and (contains? selected-edges [:resist-damage :stress-cap])
+               (contains? selected-edges [:stress-cap :resist-damage])
+
                (contains? selected-edges [:stress-cap :physical-force])
-               (contains? selected-edges [:physical-force :climb])
-               (contains? selected-edges [:climb :physical-force])
                (contains? selected-edges [:physical-force :stress-cap])
-               (contains? selected-edges [:stress-cap :resist-damage])))
-        "has all pairs in a path")))
+
+               (contains? selected-edges [:physical-force :climb])
+               (contains? selected-edges [:climb :physical-force])))
+        "has all pairs in a path"))
+
+  (testing "filter-single-direction"
+    (is (=  (g/filter-single-direction [[:a :b] [:c :d] [:b :a] [:d :c]])
+            [[:a :b] [:c :d]]))))

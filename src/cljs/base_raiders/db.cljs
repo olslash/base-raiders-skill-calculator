@@ -149,7 +149,7 @@
 (def max-path-cost 4)
 
 (def default-db
-  {:name        "Base Raiders Skills"
+  {:name         "Base Raiders Skills"
    :skills       skills
    :skill-costs  skill-costs
    :skill-labels skill-labels
