@@ -16,8 +16,7 @@
      [:div [:a {:href "#/"} "go to Home Page"]]]))
 
 
-(def styles {:grid          {
-                             :padding "25px"}
+(def styles {:grid          {:padding "25px"}
 
              :node          {:stroke       "#333"
                              :stroke-width "1px"
@@ -38,8 +37,10 @@
                              :stroke-dasharray "1,15"
                              :stroke-linecap   "round"
                              :d                "M5 40 l215 0"}
+             :edge-selected {:stroke "#D88"}
 
-             :edge-selected {:stroke "#D88"}})
+             :h1            {:font-size "40"}
+             :h2            {:font-size "20"}})
 
 
 (def node-positions {:init-physical  [1.5 0]
@@ -88,7 +89,20 @@
                      :craft          [3 13]
                      :workspace      [3 14]})
 
-
+(defn score-text [{:keys [score x y]}]
+  [:g
+   [:text {:x x
+           :y y
+           :text-anchor "middle"}
+    [:tspan {:style (merge (:h1 styles)
+                           (:label styles))} "Total Cost:"]
+    [:tspan {:style (merge (:h2 styles)
+                           (:label styles))
+             :dy "25"
+             :dx "-80"}
+     (str score " " (if (= 1 score)
+                      "point"
+                      "points"))]]])
 
 
 
@@ -135,7 +149,8 @@
 
 
 
-(defn grid [{:keys [node-positions graph node-labels selected-skills selected-edges skill-costs]}]
+(defn grid
+  [{:keys [node-positions graph node-labels selected-skills selected-edges skill-costs score]}]
   (let [x-scale 150
         y-scale 75
         already-drawn-edges   (transient #{})]
@@ -165,7 +180,10 @@
                                       :y        (* y y-scale)
                                       :text     (skill node-labels)
                                       :selected (skill (set selected-skills))
-                                      :cost     (skill skill-costs)}])])))
+                                      :cost     (skill skill-costs)}])
+           [score-text {:score score
+                        :x 600
+                        :y 200}]])))
 
 
 (defn home-panel []
@@ -177,13 +195,14 @@
         score           (subscribe [:current-score])]
     (fn []
       [:div
-       [:div "The score is " @score]
+       #_[:div "The score is " @score]
        [grid {:node-positions node-positions
               :graph           @skill-graph
               :node-labels     @skill-labels
               :selected-skills @selected-skills
               :skill-costs     @skill-costs
-              :selected-edges  @selected-edges}]])))
+              :selected-edges  @selected-edges
+              :score           @score}]])))
 
 
 
