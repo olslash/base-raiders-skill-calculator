@@ -7,9 +7,10 @@
               [base-raiders.routes :as routes]
               [base-raiders.views :as views]))
 
-(.initializeTouchEvents js/React true)
+
 
 (defn mount-root []
+  (.initializeTouchEvents js/React true)
   (reagent/render [views/main-panel]
                   (.getElementById js/document "app")))
 
