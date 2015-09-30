@@ -41,7 +41,7 @@
              :edge-selected {:stroke "#D88"}})
 
 
-(def node-positions {:init-physical  [1 0]
+(def node-positions {:init-physical  [1.5 0]
                      :init-mental    [1 1]
                      :init-social    [2 1]
                      :resist-damage  [0 0]
