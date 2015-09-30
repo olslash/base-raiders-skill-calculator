@@ -23,16 +23,16 @@
                              :fill         "#DDD"}
 
              :node-selected {:fill "#888"}
+             :node-1        {}
+             :node-2        {:stroke-dasharray "5,5"}
+             :node-special  {:stroke-width "4"}
 
              :label         {:fill        "#333"
                              :font-family "sans-serif"}
 
              :edge          {:stroke "#333"}
-
              :edge-0        {:stroke-width "4px"}
-
              :edge-1        {:stroke-width "2px"}
-
              :edge-2        {:stroke-width     "2px"
                              :stroke-dasharray "10,10"
                              :d                "M5 40 l215 0"}
@@ -90,7 +90,7 @@
 
 
 
-(defn node [{:keys [x y text selected on-click]}]
+(defn node [{:keys [x y text selected on-click cost]}]
   (let [node-scale 20
         text-x-offset 60
         text-y-offset 10
@@ -101,12 +101,15 @@
                       (-> pt-y
                           (* node-scale)
                           (+ y))])
-                   [[0 1] [1 2] [5 2] [6 1] [5 0] [1 0]])]
+                   [[0 1] [1 2] [5 2] [6 1] [5 0] [1 0]])
+        style (merge (:node styles)
+                     (when selected (:node-selected styles))
+                     (case cost
+                       1 (:node-1 styles)
+                       2 (:node-2 styles)))]
+
     [:g {:on-click on-click
-         :style (if selected
-                  (merge (:node styles)
-                         (:node-selected styles))
-                  (:node styles))}
+         :style style}
      [:polygon {:points (join " " (map #(join "," %) shape))}]
 
      [:g {:style (:label styles)}
@@ -130,7 +133,7 @@
 
 
 
-(defn grid [{:keys [node-positions graph node-labels selected-skills selected-edges]}]
+(defn grid [{:keys [node-positions graph node-labels selected-skills selected-edges skill-costs]}]
   (let [x-scale 200
         y-scale 100
         already-drawn-edges   (transient #{})]
@@ -159,13 +162,15 @@
                                       :x        (* x x-scale)
                                       :y        (* y y-scale)
                                       :text     (skill node-labels)
-                                      :selected (skill (set selected-skills))}])])))
+                                      :selected (skill (set selected-skills))
+                                      :cost     (skill skill-costs)}])])))
 
 
 (defn home-panel []
   (let [skill-labels    (subscribe [:skill-labels])
         skill-graph     (subscribe [:skills])
         selected-skills (subscribe [:selected-skills])
+        skill-costs     (subscribe [:skill-costs])
         selected-edges  (subscribe [:selected-edges])
         score           (subscribe [:current-score])]
     (fn []
@@ -175,6 +180,7 @@
               :graph           @skill-graph
               :node-labels     @skill-labels
               :selected-skills @selected-skills
+              :skill-costs     @skill-costs
               :selected-edges  @selected-edges}]])))
 
 
