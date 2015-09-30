@@ -33,8 +33,9 @@
              :edge          {:stroke "#333"}
              :edge-0        {:stroke-width "4px"}
              :edge-1        {:stroke-width "2px"}
-             :edge-2        {:stroke-width     "2px"
-                             :stroke-dasharray "10,10"
+             :edge-2        {:stroke-width     "8px"
+                             :stroke-dasharray "1,15"
+                             :stroke-linecap   "round"
                              :d                "M5 40 l215 0"}
 
              :edge-selected {:stroke "#D88"}})
