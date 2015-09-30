@@ -109,9 +109,9 @@
                        1 (:node-1 styles)
                        2 (:node-2 styles)))]
 
-    [:g {:on-click on-click
-         :style style}
-     [:polygon {:points (join " " (map #(join "," %) shape))}]
+    [:g {:on-click on-click}
+     [:polygon {:style style
+                :points (join " " (map #(join "," %) shape))}]
 
      [:g {:style (:label styles)}
       [:text {:x (+ text-x-offset x) :y (+ text-y-offset y) :text-anchor "middle"}
