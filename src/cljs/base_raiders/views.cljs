@@ -16,7 +16,8 @@
      [:div [:a {:href "#/"} "go to Home Page"]]]))
 
 
-(def styles {:grid          {:margin "25px"}
+(def styles {:grid          {
+                             :padding "25px"}
 
              :node          {:stroke       "#333"
                              :stroke-width "1px"
@@ -135,12 +136,12 @@
 
 
 (defn grid [{:keys [node-positions graph node-labels selected-skills selected-edges skill-costs]}]
-  (let [x-scale 200
-        y-scale 100
+  (let [x-scale 150
+        y-scale 75
         already-drawn-edges   (transient #{})]
     (into [:svg {:style (:grid styles)
-                 :height 2000
-                 :width  1500}]
+                 :height 1100
+                 :width  900}]
 
           ; edges
           [(for [[start-node neighbors] graph]
