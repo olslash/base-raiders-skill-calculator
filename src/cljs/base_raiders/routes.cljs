@@ -6,21 +6,28 @@
               [goog.history.EventType :as EventType]
               [re-frame.core :as re-frame]))
 
+(def h (History.))
+
 (defn hook-browser-navigation! []
-  (doto (History.)
+  (doto h
     (events/listen
      EventType/NAVIGATE
      (fn [event]
        (secretary/dispatch! (.-token event))))
     (.setEnabled true)))
 
+(defn update-url-token [token]
+  (.replaceToken h token))
+
 (defn app-routes []
-  (print "routing")
   (secretary/set-config! :prefix "#")
   ;; --------------------
   ;; define routes here
-  (defroute "/" []
-    (re-frame/dispatch [:set-active-panel :home-panel]))
+  (defroute "/" [query-params]
+            (when-not (empty? (:skills query-params))
+              (re-frame/dispatch [:set-skills (cljs.reader/read-string (:skills query-params))]))
+
+            (re-frame/dispatch [:set-active-panel :home-panel query-params]))
 
   (defroute "/about" []
     (re-frame/dispatch [:set-active-panel :about-panel]))

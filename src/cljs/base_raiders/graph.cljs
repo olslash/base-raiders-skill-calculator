@@ -115,6 +115,6 @@
 (defn filter-single-direction [selected-edges]
   "given a collection of bi-directional paths between nodes, distinct so only one edge per pair remains"
   (vec (reduce (fn [acc [from to]]
-                 (if ((complement contains?) acc [to from])
+                 (if-not (contains? acc [to from])
                    (conj acc [from to])
                    acc)) #{} (set selected-edges))))

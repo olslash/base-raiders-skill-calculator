@@ -162,7 +162,7 @@
           [(for [[start-node neighbors] graph]
              (let [connected-nodes (keys neighbors)]
                (for [neighbor connected-nodes]
-                 (when ((complement contains?) already-drawn-edges [neighbor start-node])
+                 (when-not (contains? already-drawn-edges [neighbor start-node])
                    (conj! already-drawn-edges [start-node neighbor])
                    (let [cost (get-in graph [start-node neighbor])]
                      ^{:key (str start-node neighbor)} [edge {:selected (or (contains? (set selected-edges) [start-node neighbor])

@@ -1,6 +1,9 @@
 (ns base-raiders.handlers
     (:require [re-frame.core :as re-frame]
-              [base-raiders.db :as db]))
+              [re-frame.middleware :refer [after]]
+              [secretary.core :as secretary]
+              [base-raiders.db :as db]
+              [base-raiders.routes :as routes]))
 
 (re-frame/register-handler
  :initialize-db
@@ -12,21 +15,23 @@
  (fn [db [_ active-panel]]
    (assoc db :active-panel active-panel)))
 
-#_(re-frame/register-handler
-  :select-skill
-  (fn [db [_ skill]]
-    (conj skill (:selected db))))
+(re-frame/register-handler
+  :set-skills
+  (fn [db [_ skills]]
+    (let []
+      (assoc db :selected skills))))
 
-#_(re-frame/register-handler
-  :deselect-skill
-  (fn [db [_ skill]]
-    (vec (remove #(= skill %) (:selected db)))))
 
 (re-frame/register-handler
   :toggle-skill
+  [(after (fn [db]
+            (routes/update-url-token (str "?skills=" (:selected db)))))] ; update url
   (fn [db [_ skill]]
-    (let [selected (:selected db)]
-      (assoc db :selected
-                (if (contains? (set selected) skill)
-                  (vec (remove #(= skill %) selected))           ; remove
-                  (conj selected skill))))))                     ; add
+    (let [selected (:selected db)
+          new-db   (assoc db :selected
+                             (if (contains? (set selected) skill)
+                               (vec (remove #(= skill %) selected))      ; remove
+                               (conj selected skill)))]
+      new-db)))                     ; add
+
+
