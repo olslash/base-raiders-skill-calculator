@@ -1,10 +1,12 @@
 (ns base-raiders.routes
     (:require-macros [secretary.core :refer [defroute]])
     (:import goog.History)
-    (:require [secretary.core :as secretary]
-              [goog.events :as events]
-              [goog.history.EventType :as EventType]
-              [re-frame.core :as re-frame]))
+    (:require
+      [cljs.reader :refer [read-string]]
+      [secretary.core :as secretary]
+      [goog.events :as events]
+      [goog.history.EventType :as EventType]
+      [re-frame.core :as re-frame]))
 
 (def h (History.))
 
@@ -25,7 +27,7 @@
   ;; define routes here
   (defroute "/" [query-params]
             (when-not (empty? (:skills query-params))
-              (re-frame/dispatch [:set-skills (cljs.reader/read-string (:skills query-params))]))
+              (re-frame/dispatch [:set-skills (read-string (:skills query-params))]))
 
             (re-frame/dispatch [:set-active-panel :home-panel query-params]))
 
