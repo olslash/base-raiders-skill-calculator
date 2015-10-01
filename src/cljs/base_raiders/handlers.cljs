@@ -1,7 +1,6 @@
 (ns base-raiders.handlers
     (:require [re-frame.core :as re-frame]
               [re-frame.middleware :refer [after]]
-              [secretary.core :as secretary]
               [base-raiders.db :as db]
               [base-raiders.routes :as routes]))
 
@@ -24,8 +23,9 @@
 
 (re-frame/register-handler
   :toggle-skill
-  [(after (fn [db]
-            (routes/update-url-token (str "?skills=" (:selected db)))))] ; update url
+  (after (fn [db]
+           (routes/update-url-token (str "?skills=" (:selected db))))) ; update url
+
   (fn [db [_ skill]]
     (let [selected (:selected db)
           new-db   (assoc db :selected

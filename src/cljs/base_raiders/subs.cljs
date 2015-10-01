@@ -17,8 +17,6 @@
  (fn [db _]
    (reaction (:active-panel @db))))
 
-
-
 (register-sub
   :skills
   (fn [db _]
