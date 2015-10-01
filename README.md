@@ -1,6 +1,11 @@
-# base-raiders
+# Base Raiders Skill Calculator
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+A skill calculator for the [Base Raiders](http://www.baseraiders.com) RPG. Written with ClojureScript and [re-frame](https://github.com/Day8/re-frame). 
+
+Based on [this page from the game manual](http://www.baseraiders.com/wp-content/uploads/2014/07/Base_Raiders_Skill.pdf).
+
+### DEMO
+[Here.](http://olslash.github.io/base-raiders-skill-calculator)
 
 ## Development Mode
 
