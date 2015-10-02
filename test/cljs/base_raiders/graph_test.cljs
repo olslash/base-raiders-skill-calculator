@@ -22,7 +22,12 @@
              :shoot          {:notice 2}
              :init-physical  {:init-mental 2 :init-social 2}
              :init-mental    {:init-physical 2 :init-social 2}
-             :init-social    {:init-physical 2 :init-mental 2}})
+             :init-social    {:init-physical 2 :init-mental 2}
+
+             :dismantle      {:repair 0}
+             :repair         {:dismantle 0 :craft 1}
+             :craft          {:repair 1 :workspace 1}
+             :workspace      {:craft 1}})
 
 (def skill-costs {:resist-damage  2
                   :stress-cap     2
@@ -40,7 +45,12 @@
                   :shoot          2
                   :init-physical  2
                   :init-mental    2
-                  :init-social    2})
+                  :init-social    2
+
+                  :dismantle      1
+                  :repair         1
+                  :craft          1
+                  :workspace      1})
 
 
 (def max-path-cost 4)
@@ -170,7 +180,17 @@
         "unconnected skills")
     (is (= (g/game-cost-of-board skills skill-costs [:parry :resist-damage :move])
            12)
-        "3 skills selected"))
+        "3 skills selected")
+    (is (= (g/game-cost-of-board skills skill-costs [:leap :move :stealth :dexterity])
+           7)
+        "follows a path properly")
+
+    (is (= (g/game-cost-of-board skills skill-costs [:workspace :craft :repair :dismantle])
+           6)
+        "reversed path shouldn't score differently 1")
+    (is (= (g/game-cost-of-board skills skill-costs [:dismantle :repair :craft :workspace])
+           6)
+        "reversed path shouldn't score differently 2"))
 
   (testing "selected-edges"
     (is (let [selected-edges (set (g/selected-edges skills [:leap :move]))]
